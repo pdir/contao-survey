@@ -1,8 +1,20 @@
 <?php if (strlen($this->textBefore)): ?>
 <span class="before"><?php echo $this->textBefore; ?></span>
 <?php endif; ?>
+
 <?php if ($this->multiLine): ?>
 <textarea name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?php echo $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" <?php echo $this->attributes; ?> ><?php echo $this->value; ?></textarea>
+<?php elseif ($this->slider): ?>
+<div class="survey-slider">
+    <div class="labels">
+        <div>{{image::files/meinschlankprinzip/01_inhalte/Icons/face-smile-solid.svg}}</div>
+        <div>{{image::files/meinschlankprinzip/01_inhalte/Icons/face-smile-solid-2.svg}}</div>
+        <div>{{image::files/meinschlankprinzip/01_inhalte/Icons/face-meh-solid.svg}}</div>
+        <div>{{image::files/meinschlankprinzip/01_inhalte/Icons/face-frown-solid-2.svg}}</div>
+        <div>{{image::files/meinschlankprinzip/01_inhalte/Icons/face-frown-solid.svg}}</div>
+    </div>
+    <input type="range" name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?php echo $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" min="1" max="5" value="3" step="1" <?php echo $this->attributes; ?> />
+</div>
 <?php else: ?>
 <input type="text" name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?php echo $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" <?php echo $this->attributes; ?> />
 <?php endif; ?>

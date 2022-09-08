@@ -1,26 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * @copyright  Helmut Schottmüller 2005-2018 <http://github.com/hschottm>
  * @author     Helmut Schottmüller (hschottm)
  * @package    contao-survey
  * @license    LGPL-3.0+, CC-BY-NC-3.0
- * @see	      https://github.com/hschottm/survey_ce
+ * @see	       https://github.com/hschottm/survey_ce
+ *
+ * forked by pdir
+ * @author     Mathias Arzberger <develop@pdir.de>
+ * @link       https://github.com/pdir/contao-survey
  */
 
 namespace Hschottm\SurveyBundle;
 
 use Contao\Database;
 use Contao\Model;
+use Model\Collection;
 
 /**
- * @property int $id
- * @property int $tstamp
- * @property int $pid
+ * @property int    $id
+ * @property int    $tstamp
+ * @property int    $pid
  * @property string $pin
- * @property int $uid
- * @property int $qid
- * @property mixed $result
+ * @property int    $uid
+ * @property int    $qid
+ * @property mixed  $result
  */
 class SurveyResultModel extends Model
 {
@@ -36,7 +43,7 @@ class SurveyResultModel extends Model
      *
      * @param array $arrIds An array of IDs
      *
-     * @return \Model\Collection|null A collection of models or null if there are no calendars
+     * @return Collection|null A collection of models or null if there are no calendars
      */
     public static function findMultipleByIds($arrIds, array $arrOptions = [])
     {

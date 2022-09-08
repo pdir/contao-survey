@@ -1,17 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * @copyright  Helmut Schottmüller 2005-2018 <http://github.com/hschottm>
  * @author     Helmut Schottmüller (hschottm)
  * @package    contao-survey
  * @license    LGPL-3.0+, CC-BY-NC-3.0
- * @see	      https://github.com/hschottm/survey_ce
+ * @see	       https://github.com/hschottm/survey_ce
+ *
+ * forked by pdir
+ * @author     Mathias Arzberger <develop@pdir.de>
+ * @link       https://github.com/pdir/contao-survey
  */
 
 $GLOBALS['TL_LANG']['tl_survey_question']['title']['0'] = 'Titel';
 $GLOBALS['TL_LANG']['tl_survey_question']['title']['1'] = 'Bitte geben Sie den Titel der Frage ein.';
-$GLOBALS['TL_LANG']['tl_survey_question']['alias']['0'] = "Alias";
-$GLOBALS['TL_LANG']['tl_survey_question']['alias']['1'] = "Der Fragenalias ist eine eindeutige Referenz, die anstelle der numerischen Fragen-ID aufgerufen werden kann.";
+$GLOBALS['TL_LANG']['tl_survey_question']['alias']['0'] = 'Alias';
+$GLOBALS['TL_LANG']['tl_survey_question']['alias']['1'] = 'Der Fragenalias ist eine eindeutige Referenz, die anstelle der numerischen Fragen-ID aufgerufen werden kann.';
 $GLOBALS['TL_LANG']['tl_survey_question']['author']['0'] = 'Autor';
 $GLOBALS['TL_LANG']['tl_survey_question']['author']['1'] = 'Bitte geben Sie den Namen des Autors ein.';
 $GLOBALS['TL_LANG']['tl_survey_question']['questiontype']['0'] = 'Fragentyp';
@@ -107,12 +113,15 @@ $GLOBALS['TL_LANG']['tl_survey_question']['delete']['1'] = 'Frage ID %s löschen
 $GLOBALS['TL_LANG']['tl_survey_question']['details']['0'] = 'Detaillierte Statistik';
 $GLOBALS['TL_LANG']['tl_survey_question']['details']['1'] = 'Detaillierte Statistik der Frage ID %s anzeigen';
 $GLOBALS['TL_LANG']['tl_survey_question']['openended'] = 'Offene Frage';
+
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_singleline'] = 'Einzeilig';
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_multiline'] = 'Mehrzeilig';
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_integer'] = 'Ganzzahl';
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_float'] = 'Kommazahl';
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_date'] = 'Datum';
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_time'] = 'Uhrzeit';
+$GLOBALS['TL_LANG']['tl_survey_question']['oe_slider'] = 'Slider';
+
 $GLOBALS['TL_LANG']['tl_survey_question']['multiplechoice'] = 'Multiple Choice Frage';
 $GLOBALS['TL_LANG']['tl_survey_question']['mc_singleresponse'] = 'Einfachauswahl';
 $GLOBALS['TL_LANG']['tl_survey_question']['mc_multipleresponse'] = 'Mehrfachauswahl';

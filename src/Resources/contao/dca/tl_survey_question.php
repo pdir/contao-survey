@@ -1,16 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * @copyright  Helmut Schottmüller 2005-2018 <http://github.com/hschottm>
  * @author     Helmut Schottmüller (hschottm)
  * @package    contao-survey
  * @license    LGPL-3.0+, CC-BY-NC-3.0
- * @see	      https://github.com/hschottm/survey_ce
+ * @see	       https://github.com/hschottm/survey_ce
+ *
+ * forked by pdir
+ * @author     Mathias Arzberger <develop@pdir.de>
+ * @link       https://github.com/pdir/contao-survey
  */
 
 use Contao\Backend;
 use Contao\BackendUser;
 use Contao\DataContainer;
+use Contao\DC_Table;
 use Contao\Environment;
 use Contao\Input;
 use Contao\StringUtil;
@@ -18,7 +25,7 @@ use Contao\StringUtil;
 $GLOBALS['TL_DCA']['tl_survey_question'] = [
     // Config
     'config' => [
-        'dataContainer' => 'Table',
+        'dataContainer' => DC_Table::class,
         'ptable' => 'tl_survey_page',
         'ctable' => [],
         'enableVersioning' => true,
@@ -93,6 +100,7 @@ $GLOBALS['TL_DCA']['tl_survey_question'] = [
         'openendedoe_float' => '{title_legend},title,alias,author,questiontype,openended_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},openended_textbefore,openended_textafter,openended_textinside,lower_bound,upper_bound;{expert_legend:hide},cssClass',
         'openendedoe_date' => '{title_legend},title,alias,author,questiontype,openended_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},openended_textbefore,openended_textafter,openended_textinside,lower_bound_date,upper_bound_date;{expert_legend:hide},cssClass',
         'openendedoe_time' => '{title_legend},title,alias,author,questiontype,openended_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},openended_textbefore,openended_textafter,openended_textinside,lower_bound_time,upper_bound_time;{expert_legend:hide},cssClass',
+        'openendedoe_slider' => '{title_legend},title,alias,author,questiontype,openended_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},openended_textbefore,openended_textafter,lower_bound,upper_bound;{expert_legend:hide},cssClass',
         'multiplechoicemc_singleresponse' => '{title_legend},title,alias,author,questiontype,multiplechoice_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},choices,addother,mc_style;{expert_legend:hide},cssClass',
         'multiplechoicemc_dichotomous' => '{title_legend},title,alias,author,questiontype,multiplechoice_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},mc_style;{expert_legend:hide},cssClass',
         'multiplechoicemc_multipleresponse' => '{title_legend},title,alias,author,questiontype,multiplechoice_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},choices,addother,mc_style;{expert_legend:hide},cssClass',
@@ -122,14 +130,13 @@ $GLOBALS['TL_DCA']['tl_survey_question'] = [
         'sorting' => [
             'sql' => "int(10) unsigned NOT NULL default '0'",
         ],
-        'alias' => array
-    		(
-    			'label'                   => &$GLOBALS['TL_LANG']['tl_survey_question']['alias'],
-    			'inputType'               => 'text',
-    			'eval'                    => array('rgxp' => 'alias', 'maxlength' => 128, 'tl_class'=>'w50'),
-    			'save_callback'           => array(array('tl_survey_question', 'generateAlias')),
-    			'sql'                     => "varchar(128) NOT NULL default ''"
-    		),
+        'alias' => [
+                'label' => &$GLOBALS['TL_LANG']['tl_survey_question']['alias'],
+                'inputType' => 'text',
+                'eval' => ['rgxp' => 'alias', 'maxlength' => 128, 'tl_class' => 'w50'],
+                'save_callback' => [['tl_survey_question', 'generateAlias']],
+                'sql' => "varchar(128) NOT NULL default ''",
+            ],
         'questiontype' => [
             'label' => &$GLOBALS['TL_LANG']['tl_survey_question']['questiontype'],
             'default' => 'openended',
@@ -525,6 +532,7 @@ class tl_survey_question extends Backend
         $oe['oe_float'] = $GLOBALS['TL_LANG']['tl_survey_question']['oe_float'];
         $oe['oe_date'] = $GLOBALS['TL_LANG']['tl_survey_question']['oe_date'];
         $oe['oe_time'] = $GLOBALS['TL_LANG']['tl_survey_question']['oe_time'];
+        $oe['oe_slider'] = $GLOBALS['TL_LANG']['tl_survey_question']['oe_slider'];
 
         return $oe;
     }
@@ -549,41 +557,45 @@ class tl_survey_question extends Backend
     }
 
     public function generateAlias($varValue, $dc)
-  	{
-  		$autoAlias = false;
+    {
+        $autoAlias = false;
 
-  		// Generiere einen Alias wenn es keinen gibt
-  		if ($varValue == '') {
-  			$autoAlias = true;
-  			$varValue = StringUtil::generateAlias($dc->activeRecord->title);
-  		}
-  		// Die gewünschte Tabelle zuweisen, aus der ein auto- Alias generiert werden soll.
-  		// Input::get('table') lassen, wenn die Tabelle dynamisch zugeordnet werden soll.
-  		$table = Input::get('table') ? Input::get('table') : 'tl_survey_question';
-  		$objAlias = $this->Database->prepare("SELECT id FROM " . $table . " WHERE alias=?")->execute($varValue);
-  		// Überprüfe ob der Alias bereits existiert.
-  		if ($objAlias->numRows > 1 && !$autoAlias) {
-  			throw new \Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
-  		}
-  		// wenn alias bereits existiert, füge eine ID hinzu.
-  		if ($objAlias->numRows && $autoAlias) {
-  			$varValue .= '-' . $dc->id;
-  		}
-  		return $varValue;
-  	}
+        // Generiere einen Alias wenn es keinen gibt
+        if ('' === $varValue) {
+            $autoAlias = true;
+            $varValue = StringUtil::generateAlias($dc->activeRecord->title);
+        }
+        // Die gewünschte Tabelle zuweisen, aus der ein auto- Alias generiert werden soll.
+        // Input::get('table') lassen, wenn die Tabelle dynamisch zugeordnet werden soll.
+        $table = Input::get('table') ?: 'tl_survey_question';
+        $objAlias = $this->Database->prepare('SELECT id FROM '.$table.' WHERE alias=?')->execute($varValue);
+        // Überprüfe ob der Alias bereits existiert.
+        if ($objAlias->numRows > 1 && !$autoAlias) {
+            throw new Exception(sprintf($GLOBALS['TL_LANG']['ERR']['aliasExists'], $varValue));
+        }
+        // wenn alias bereits existiert, füge eine ID hinzu.
+        if ($objAlias->numRows && $autoAlias) {
+            $varValue .= '-'.$dc->id;
+        }
 
-    public function setCompleteStatus(DataContainer $dc)
+        return $varValue;
+    }
+
+    public function setCompleteStatus(DataContainer $dc): void
     {
         $this->Database->prepare('UPDATE tl_survey_question SET complete = ?, original = ? WHERE id=?')
-            ->execute(1, 1, $dc->id);
+            ->execute(1, 1, $dc->id)
+        ;
     }
 
     public function getMCStyleOptions(DataContainer $dc)
     {
         $objQuestion = $this->Database->prepare('SELECT multiplechoice_subtype FROM tl_survey_question WHERE id=?')
             ->limit(1)
-            ->execute($dc->id);
-        if (0 == strcmp($objQuestion->multiplechoice_subtype, 'mc_multipleresponse')) {
+            ->execute($dc->id)
+        ;
+
+        if (0 === strcmp($objQuestion->multiplechoice_subtype, 'mc_multipleresponse')) {
             return ['vertical', 'horizontal'];
         }
 
@@ -594,8 +606,10 @@ class tl_survey_question extends Backend
     {
         $objQuestion = $this->Database->prepare('SELECT multiplechoice_subtype FROM tl_survey_question WHERE id=?')
             ->limit(1)
-            ->execute($dc->id);
-        if (0 == strcmp($objQuestion->multiplechoice_subtype, 'mc_singleresponse')) {
+            ->execute($dc->id)
+        ;
+
+        if (0 === strcmp($objQuestion->multiplechoice_subtype, 'mc_singleresponse')) {
             return '<a class="tl_submit" style="margin-top: 10px;" href="'.$this->addToUrl('key=scale').'" title="'.StringUtil::specialchars($GLOBALS['TL_LANG']['tl_survey_question']['addscale'][1]).'" onclick="Backend.getScrollOffset();">'.StringUtil::specialchars($GLOBALS['TL_LANG']['tl_survey_question']['addscale'][0]).'</a>';
         }
 
@@ -605,37 +619,41 @@ class tl_survey_question extends Backend
     /**
      * Return a form to choose a CSV file and import it.
      *
-     * @param object
+     * @param object $dc
      *
      * @return string
      */
     public function addScale(DataContainer $dc)
     {
-        if ('scale' != Input::get('key')) {
+        if ('scale' !== Input::get('key')) {
             return '';
         }
 
         $objSurvey = $this->Database->prepare('SELECT tl_survey.language FROM tl_survey WHERE tl_survey.id=(SELECT pid FROM tl_survey_page WHERE tl_survey_page.id=(SELECT tl_survey_question.pid FROM tl_survey_question WHERE tl_survey_question.id=?))')
             ->limit(1)
-            ->execute($dc->id);
+            ->execute($dc->id)
+        ;
 
         $objScales = $this->Database->prepare('SELECT tl_survey_scale.*, tl_survey_scale_folder.title AS folder FROM tl_survey_scale, tl_survey_scale_folder WHERE tl_survey_scale.language=? AND tl_survey_scale.pid = tl_survey_scale_folder.id ORDER BY tl_survey_scale_folder.title, tl_survey_scale.title')
-            ->execute($objSurvey->language);
+            ->execute($objSurvey->language)
+        ;
 
         $arrScales = [];
+
         while ($objScales->next()) {
             $arrScales[$objScales->id] = ['title' => $objScales->title, 'scales' => deserialize($objScales->scale, true), 'folder' => $objScales->folder];
         }
 
         // Add scale
-        if ('tl_add_scale' == Input::post('FORM_SUBMIT')) {
-            if ((!Input::post('scale') || 0 == strcmp(Input::post('scale'), '-'))) {
+        if ('tl_add_scale' === Input::post('FORM_SUBMIT')) {
+            if ((!Input::post('scale') || 0 === strcmp(Input::post('scale'), '-'))) {
                 $_SESSION['TL_ERROR'][] = $GLOBALS['TL_LANG']['ERR']['selectoption'];
                 $this->reload();
             }
 
             $this->Database->prepare('UPDATE tl_survey_question SET choices=? WHERE id=?')
-                ->execute(serialize($arrScales[Input::post('scale')]['scales']), $dc->id);
+                ->execute(serialize($arrScales[Input::post('scale')]['scales']), $dc->id)
+            ;
 
             setcookie('BE_PAGE_OFFSET', 0, 0, '/');
             $this->redirect(str_replace('&key=scale', '', Environment::get('request')));
@@ -660,9 +678,10 @@ class tl_survey_question extends Backend
   <select name="scale" id="scale" class="tl_select" onfocus="Backend.getScrollOffset();">
 		<option value="-">-</option>\n';
         $lastfolder = '';
+
         foreach ($arrScales as $id => $scale) {
-            if (0 != strcmp($scale['folder'], $lastfolder)) {
-                if (\strlen($lastfolder)) {
+            if (0 !== strcmp($scale['folder'], $lastfolder)) {
+                if (strlen($lastfolder)) {
                     $result .= '</optgroup>';
                 }
                 $result .= '<optgroup label="'.StringUtil::specialchars($scale['folder']).'">';
@@ -671,7 +690,7 @@ class tl_survey_question extends Backend
             $lastfolder = $scale['folder'];
         }
         $result .= '</optgroup>';
-        $result .= '  </select>'.(\strlen($GLOBALS['TL_LANG']['tl_survey_question']['scale'][1]) ? '
+        $result .= '  </select>'.(strlen($GLOBALS['TL_LANG']['tl_survey_question']['scale'][1]) ? '
   <p class="tl_help">'.$GLOBALS['TL_LANG']['tl_survey_question']['scale'][1].'</p>' : '').'
 </div>
 </fieldset>
