@@ -81,7 +81,7 @@ class ContentSurvey extends ContentElement
             $GLOBALS['TL_JAVASCRIPT'] = ['bundles/hschottmsurvey/js/survey.js'];
         }
 
-        $surveyID = \strlen(Input::post('survey')) ? Input::post('survey') : $this->survey;
+        $surveyID = \strlen((string) Input::post('survey')) ? Input::post('survey') : $this->survey;
 
         $this->objSurvey = $this->Database->prepare('SELECT * FROM tl_survey WHERE id=?')
             ->execute($surveyID)
@@ -120,6 +120,7 @@ class ContentSurvey extends ContentElement
         if (0 === $page) {
             $this->outIntroductionPage();
         }
+
         // check survey start
         if (Input::post('start') || (1 === $this->objSurvey->immediate_start && !Input::post('FORM_SUBMIT'))) {
             $page = 0;
@@ -196,12 +197,13 @@ class ContentSurvey extends ContentElement
                   break;
             }
         }
+
         // check question input and save input or return a question list of the page
         $surveypage = [];
 
         if (($page > 0 && $page <= \count($pages))) {
             if ('tl_survey' === Input::post('FORM_SUBMIT')) {
-                $goback = \strlen(Input::post('prev')) ? true : false;
+                $goback = \strlen((string) Input::post('prev')) ? true : false;
                 $surveypage = $this->createSurveyPage($pages[$page - 1], $page, true, $goback);
             }
         }
@@ -210,7 +212,7 @@ class ContentSurvey extends ContentElement
         $previouspage = $page;
 
         if (0 === \count($surveypage)) {
-            if (\strlen(Input::post('next'))) {
+            if (\strlen((string) Input::post('next'))) {
                 $pageid = $this->evaluateConditions($pages[$page - 1]);
 
                 if (null === $pageid) {
@@ -225,11 +227,11 @@ class ContentSurvey extends ContentElement
                 $this->insertNavigation($this->objSurvey->id, $this->pin, $this->User->id, $previouspage, $page);
             }
 
-            if (\strlen(Input::post('finish'))) {
+            if (\strlen((string) Input::post('finish'))) {
                 ++$page;
             }
 
-            if (\strlen(Input::post('prev'))) {
+            if (\strlen((string) Input::post('prev'))) {
                 $res = SurveyNavigationModel::findOneBy(['pid=?', 'pin=?', 'uid=?', 'topage=?'], [$this->objSurvey->id, $this->pin, 0 === \strlen($this->User->id) ? 0 : $this->User->id, $page], ['order' => 'tstamp DESC']);
 
                 if (null !== $res) {
@@ -401,8 +403,8 @@ class ContentSurvey extends ContentElement
     {
         $this->questionpositions = [];
 
-        if (!\strlen($this->pin)) {
-            $this->pin = Input::post('pin');
+        if (!\strlen((string) $this->pin)) {
+            $this->pin = (string) Input::post('pin');
         }
         $surveypage = [];
         $pagequestioncounter = 1;
@@ -632,9 +634,9 @@ class ContentSurvey extends ContentElement
 
                                         if ($objFile->size) {
                                             $objMailProperties->attachments[TL_ROOT.'/'.$objFile->path] = [
-                                                        'file' => TL_ROOT.'/'.$objFile->path,
-                                                        'name' => $objFile->basename,
-                                                        'mime' => $objFile->mime, ];
+                                                'file' => TL_ROOT.'/'.$objFile->path,
+                                                'name' => $objFile->basename,
+                                                'mime' => $objFile->mime, ];
                                         }
                                     }
                                 }
@@ -770,9 +772,9 @@ class ContentSurvey extends ContentElement
 
                                             if ($objFile->size) {
                                                 $objMailProperties->attachments[TL_ROOT.'/'.$objFile->path] = [
-                                                          'file' => TL_ROOT.'/'.$objFile->path,
-                                                          'name' => $objFile->basename,
-                                                          'mime' => $objFile->mime, ];
+                                                    'file' => TL_ROOT.'/'.$objFile->path,
+                                                    'name' => $objFile->basename,
+                                                    'mime' => $objFile->mime, ];
                                             }
                                         }
                                     }

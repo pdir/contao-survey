@@ -124,7 +124,6 @@ class FormConstantSumQuestion extends FormQuestionWidget
     public function getResultStringRepresentation()
     {
         $result = '';
-        $choices = [];
         $counter = 1;
 
         foreach ($this->arrChoices as $choice) {

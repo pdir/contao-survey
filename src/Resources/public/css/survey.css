@@ -16,6 +16,28 @@
 	color: #7f7f7f;
 }
 
+/* some new widget classes for eval.tl_class */
+.w125 {
+	width: calc(12.5% - 30px);
+	float: left;
+	min-height: 80px;
+}
+.w20 {
+	width: calc(20% - 30px);
+	float: left;
+	min-height: 80px;
+}
+.w25 {
+	width: calc(25% - 30px);
+	float: left;
+	min-height: 80px;
+}
+.w75 {
+	width: calc(75% - 30px);
+	float: left;
+	min-height: 80px;
+}
+
 /* backend statistics details */
 
 td.first {

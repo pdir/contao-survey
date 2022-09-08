@@ -20,7 +20,7 @@ use Contao\Database;
 use Contao\Input;
 use Hschottm\SurveyBundle\SurveyResultModel;
 
- $found = strlen(Input::get('id')) ? SurveyResultModel::findByPid(Input::get('id')) : null;
+ $found = strlen((string) Input::get('id')) ? SurveyResultModel::findByPid(Input::get('id')) : null;
  $hasData = null !== $found && 0 < $found->count() ? true : false;
 
 /*

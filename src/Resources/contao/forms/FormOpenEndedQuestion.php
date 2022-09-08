@@ -79,6 +79,13 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                         $this->strLowerBound = $varValue['lower_bound_time'];
                         $this->strUpperBound = $varValue['upper_bound_time'];
                         break;
+
+                    case 'oe_slider':
+                        //$this->rgxp = 'time';
+                        $this->slider_min_value = $varValue['slider_min_value'];
+                        $this->slider_init_value = $varValue['slider_init_value'];
+                        $this->slider_max_value = $varValue['slider_max_value'];
+                        break;
                 }
                 $method = 'setData_'.$varValue['openended_subtype'];
 
@@ -146,8 +153,12 @@ class FormOpenEndedQuestion extends FormQuestionWidget
         $template->ctrl_class = (\strlen($this->strClass) ? ' '.$this->strClass : '');
         $template->multiLine = 0 === strcmp($this->questiontype, 'oe_multiline');
         $template->singleLine = 0 === strcmp($this->questiontype, 'oe_singleline');
+        /* question type slider */
         $template->slider = 0 === strcmp($this->questiontype, 'oe_slider');
-        dump($this->questiontype);
+        $template->slider_min_value = $this->slider_min_value;
+        $template->slider_init_value = $this->slider_init_value;
+        $template->slider_max_value = $this->slider_max_value;
+
         $template->value = $this->varValue;
         $template->textBefore = $this->strTextBefore;
         $template->textAfter = $this->strTextAfter;
@@ -174,7 +185,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
             $this->arrAttributes['value'] = StringUtil::specialchars($varValue['openended_textinside']);
         }
 
-        if (\strlen($this->varValue)) {
+        if (\strlen((string) $this->varValue)) {
             $this->arrAttributes['value'] = StringUtil::specialchars($this->varValue);
         }
     }
@@ -227,7 +238,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
     protected function validator($varInput)
     {
         $oldlabel = $this->label;
-        $label = \strlen($this->label) ? $this->label : $this->title;
+        $label = \strlen((string) $this->label) ? $this->label : $this->title;
         $this->label = $label;
 
         if (\is_array($varInput)) {
