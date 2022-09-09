@@ -90,7 +90,9 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                         $this->slider_init_value = $varValue['slider_init_value'];
                         $this->slider_max_value = $varValue['slider_max_value'];
                         $this->multiSRC = $varValue['multiSRC'];
+dump($varValue['multiSRC']);
                         $this->orderSRC = $varValue['orderSRC'];
+dump($varValue['orderSRC']);
                         break;
                 }
                 $method = 'setData_'.$varValue['openended_subtype'];
@@ -193,11 +195,11 @@ class FormOpenEndedQuestion extends FormQuestionWidget
 
                         // Add the image
                         $images[] = [
-                            //'id' => $objFiles->id,
-                            //'uuid' => $objFiles->uuid,
+                            'id' => $objFiles->id,
+                            'uuid' => $objFiles->uuid,
                             'name' => $objFile->basename,
                             'path' => $objFile->path,
-                            //'filesModel' => $objFiles->current()
+                            'filesModel' => $objFiles->current()
                         ];
                     }
                 }
@@ -230,7 +232,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                     }
                 }
 
-                dump($images);
+dump($images);
                 $template->slider_images = $images;
             }
         }
