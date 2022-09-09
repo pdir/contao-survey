@@ -100,7 +100,7 @@ $GLOBALS['TL_DCA']['tl_survey_question'] = [
         'openendedoe_float' => '{title_legend},title,alias,author,questiontype,openended_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},openended_textbefore,openended_textafter,openended_textinside,lower_bound,upper_bound;{expert_legend:hide},cssClass',
         'openendedoe_date' => '{title_legend},title,alias,author,questiontype,openended_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},openended_textbefore,openended_textafter,openended_textinside,lower_bound_date,upper_bound_date;{expert_legend:hide},cssClass',
         'openendedoe_time' => '{title_legend},title,alias,author,questiontype,openended_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},openended_textbefore,openended_textafter,openended_textinside,lower_bound_time,upper_bound_time;{expert_legend:hide},cssClass',
-        'openendedoe_slider' => '{title_legend},title,alias,author,questiontype,openended_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},openended_textbefore,openended_textafter;{slider_legend},slider_min_value,slider_init_value,slider_max_value;{expert_legend:hide},cssClass',
+        'openendedoe_slider' => '{title_legend},title,alias,author,questiontype,openended_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},openended_textbefore,openended_textafter;{slider_legend},multiSRC,sortBy,metaIgnore,slider_min_value,slider_init_value,slider_max_value;{expert_legend:hide},cssClass',
         'multiplechoicemc_singleresponse' => '{title_legend},title,alias,author,questiontype,multiplechoice_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},choices,addother,mc_style;{expert_legend:hide},cssClass',
         'multiplechoicemc_dichotomous' => '{title_legend},title,alias,author,questiontype,multiplechoice_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},mc_style;{expert_legend:hide},cssClass',
         'multiplechoicemc_multipleresponse' => '{title_legend},title,alias,author,questiontype,multiplechoice_subtype,description,hidetitle,help,language;{question_legend},question;{obligatory_legend},obligatory;{specific_legend},choices,addother,mc_style;{expert_legend:hide},cssClass',
@@ -388,6 +388,31 @@ $GLOBALS['TL_DCA']['tl_survey_question'] = [
                 'default' => 10,
                 'comment' => 'slider max value',
             ],
+        ],
+        'multiSRC' => [
+            'exclude' => true,
+            'inputType' => 'fileTree',
+            'eval' => ['multiple' => true, 'fieldType' => 'checkbox', 'orderField' => 'orderSRC', 'files' => true],
+            'sql' => 'blob NULL',
+            //'load_callback' => [['tl_content', 'setMultiSrcFlags']]
+        ],
+        'orderSRC' => [
+            'label' => &$GLOBALS['TL_LANG']['MSC']['sortOrder'],
+            'sql' => 'blob NULL',
+        ],
+        'sortBy' => [
+            'exclude' => true,
+            'inputType' => 'select',
+            'options' => ['custom', 'name_asc', 'name_desc', 'date_asc', 'date_desc', 'random'],
+            //'reference' => &$GLOBALS['TL_LANG']['tl_content'],
+            'eval' => ['tl_class' => 'w50 clr'],
+            'sql' => "varchar(32) COLLATE ascii_bin NOT NULL default ''",
+        ],
+        'metaIgnore' => [
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['tl_class' => 'w50 m12'],
+            'sql' => "char(1) COLLATE ascii_bin NOT NULL default ''",
         ],
 
         'multiplechoice_subtype' => [

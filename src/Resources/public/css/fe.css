@@ -1,0 +1,32 @@
+
+div.widget.openended.slider {
+    border: 1px solid brown;
+    background-color: cornsilk;
+}
+/* the wrapper */
+div.widget.openended.slider div.slider {
+    background-color: darkorange;
+    display: flex;
+    flex-direction: column;
+}
+/* the 1st row */
+div.widget.openended.slider div.slider div.labels {
+    display: flex;
+    flex-direction: row;
+}
+/* a single label or image */
+div.widget.openended.slider div.slider div.labels div.label {
+    border: 1px solid greenyellow;
+    width: 100%;
+    text-align: center;
+    margin: 0 0px 0 0px;
+}
+
+/* the 2nd row */
+div.widget.openended.slider div.slider div.input {
+    background-color: cornflowerblue;
+}
+div.widget.openended.slider div.slider div.input input {
+    margin: 0 1em 0 1em;
+}
+

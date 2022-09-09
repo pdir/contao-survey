@@ -5,16 +5,21 @@
 <?php if ($this->multiLine): ?>
 <textarea name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?php echo $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" <?php echo $this->attributes; ?> ><?php echo $this->value; ?></textarea>
 <?php elseif ($this->slider): ?>
-<div class="survey-slider" style="background: linear-gradient(45deg, red, blue);">
+<div class="slider">
     <div class="labels">
-        <div>{{image::files/meinschlankprinzip/01_inhalte/Icons/face-smile-solid.svg}}</div>
-        <div>{{image::files/meinschlankprinzip/01_inhalte/Icons/face-smile-solid-2.svg}}</div>
-        <div>{{image::files/meinschlankprinzip/01_inhalte/Icons/face-meh-solid.svg}}</div>
-        <div>{{image::files/meinschlankprinzip/01_inhalte/Icons/face-frown-solid-2.svg}}</div>
-        <div>{{image::files/meinschlankprinzip/01_inhalte/Icons/face-frown-solid.svg}}</div>
+        <?php
+            $i2 = 0;
+            for($i = $this->slider_min_value; $i <= $this->slider_max_value; $i++) {
+        ?>
+            <div class="label">
+                <?= $i ?>
+                {{image::<?= $this->slider_images[$i2]['path']; $i2++; ?>}}
+            </div>
+        <?php } ?>
     </div>
-    <div><?= $this->slider; ?></div>
-    <input type="range" name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?php echo $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" min="<?php echo $this->slider_min_value; ?>" max="<?php echo $this->slider_max_value; ?>" value="<?php echo $this->slider_init_value; ?>" step="1" <?php echo $this->attributes; ?> />
+    <div class="input">
+        <input style="margin: 0 calc(((100% / 21) / 2) - 0px) 0 calc(((100% / 21) / 2) - 8px);width: calc(((100% / 21) * 20) + 20px);" type="range" name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?php echo $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" min="<?php echo $this->slider_min_value; ?>" max="<?php echo $this->slider_max_value; ?>" value="<?php echo $this->slider_init_value; ?>" step="1" <?php echo $this->attributes; ?> />
+    </div>
 </div>
 <?php else: ?>
 <input type="text" name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?php echo $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" <?php echo $this->attributes; ?> />

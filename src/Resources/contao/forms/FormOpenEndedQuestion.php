@@ -17,8 +17,11 @@ declare(strict_types=1);
 namespace Hschottm\SurveyBundle;
 
 use Contao\Date;
+use Contao\File;
+use Contao\FilesModel;
 use Contao\FrontendTemplate;
 use Contao\StringUtil;
+use Contao\System;
 
 /**
  * Class FormOpenEndedQuestion.
@@ -63,7 +66,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                 switch ($this->questiontype) {
                     case 'oe_integer':
                     case 'oe_float':
-                        $this->rgxp = 'digit';
+                    $this->rgxp = 'digit';
                         $this->strLowerBound = $varValue['lower_bound'];
                         $this->strUpperBound = $varValue['upper_bound'];
                         break;
@@ -81,10 +84,13 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                         break;
 
                     case 'oe_slider':
-                        //$this->rgxp = 'time';
+                        $this->rgxp = 'digit';
+                        $this->strClass .= ' slider';
                         $this->slider_min_value = $varValue['slider_min_value'];
                         $this->slider_init_value = $varValue['slider_init_value'];
                         $this->slider_max_value = $varValue['slider_max_value'];
+                        $this->multiSRC = $varValue['multiSRC'];
+                        $this->orderSRC = $varValue['orderSRC'];
                         break;
                 }
                 $method = 'setData_'.$varValue['openended_subtype'];
@@ -159,6 +165,76 @@ class FormOpenEndedQuestion extends FormQuestionWidget
         $template->slider_init_value = $this->slider_init_value;
         $template->slider_max_value = $this->slider_max_value;
 
+        $multiSRC = StringUtil::deserialize($this->multiSRC);
+
+        if (empty($multiSRC) || !\is_array($multiSRC)) {
+            $template->slider_images = null;
+        } else {
+            // Get the file entries from the database
+            $objFiles = FilesModel::findMultipleByUuids($multiSRC);
+
+            if (null === $objFiles) {
+                $template->slider_images = false;
+            } else {
+                while ($objFiles->next()) {
+                    // Continue if the files has been processed or does not exist
+                    $fullPath = System::getContainer()->getParameter('kernel.project_dir').'/'.$objFiles->path;
+
+                    if (!file_exists($fullPath)) {
+                        continue;
+                    }
+
+                    if ('file' === $objFiles->type) {
+                        $objFile = new File($objFiles->path);
+
+                        if (!$objFile->isImage) {
+                            continue;
+                        }
+
+                        // Add the image
+                        $images[] = [
+                            //'id' => $objFiles->id,
+                            //'uuid' => $objFiles->uuid,
+                            'name' => $objFile->basename,
+                            'path' => $objFile->path,
+                            //'filesModel' => $objFiles->current()
+                        ];
+                    }
+                }
+
+                if ($this->orderSRC) {
+                    dump($this->orderSRC);
+                    $tmp = StringUtil::deserialize($this->orderSRC);
+                    dump($tmp);
+
+                    if (!empty($tmp) && \is_array($tmp)) {
+                        // Remove all values
+                        $arrOrder = array_map(static function (): void {}, array_flip($tmp));
+
+                        // Move the matching elements to their position in $arrOrder
+                        foreach ($images as $k => $v) {
+                            if (\array_key_exists($v['uuid'], $arrOrder)) {
+                                $arrOrder[$v['uuid']] = $v;
+                                unset($images[$k]);
+                            }
+                        }
+
+                        // Append the left-over images at the end
+                        if (!empty($images)) {
+                            $arrOrder = array_merge($arrOrder, array_values($images));
+                        }
+
+                        // Remove empty (unreplaced) entries
+                        $images = array_values(array_filter($arrOrder));
+                        unset($arrOrder);
+                    }
+                }
+
+                dump($images);
+                $template->slider_images = $images;
+            }
+        }
+        /* end question type slider */
         $template->value = $this->varValue;
         $template->textBefore = $this->strTextBefore;
         $template->textAfter = $this->strTextAfter;
