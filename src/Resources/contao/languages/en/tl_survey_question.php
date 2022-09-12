@@ -123,3 +123,11 @@ $GLOBALS['TL_LANG']['tl_survey_question']['columns_legend'] = 'Matrix columns';
 $GLOBALS['TL_LANG']['tl_survey_question']['bipolar_legend'] = 'Bipolar attributes';
 $GLOBALS['TL_LANG']['tl_survey_question']['sum_legend'] = 'Sum options';
 $GLOBALS['TL_LANG']['tl_survey_question']['expert_legend'] = 'Expert settings';
+
+$GLOBALS['TL_LANG']['tl_survey_question']['slider_legend'] = 'Slider Settings';
+$GLOBALS['TL_LANG']['tl_survey_question']['addImage'] = ['Add images or graphics', 'Here you can assign a graphic to each value in the slider area.'];
+$GLOBALS['TL_LANG']['tl_survey_question']['multiSRC'] = ['Select images/graphics', 'Select the images/graphics that are to be assigned to the individual values here. You can then define the order yourself by dragging and dropping.'];
+$GLOBALS['TL_LANG']['tl_survey_question']['slider_min_value'] = ['Min value', 'Specify here the value at which the range of the slider should start.'];
+$GLOBALS['TL_LANG']['tl_survey_question']['slider_init_value'] = ['Preset', 'Enter here the value to which the slider should be preset.'];
+$GLOBALS['TL_LANG']['tl_survey_question']['slider_max_value'] = ['Max value', 'Specify here the value at which the range of the slider should end.'];
+$GLOBALS['TL_LANG']['tl_survey_question']['slider_style'] = ['CSS-Styles (max. 500 Chars)', 'Enter here one or more CSS statements by which the scale is to be formatted.'];

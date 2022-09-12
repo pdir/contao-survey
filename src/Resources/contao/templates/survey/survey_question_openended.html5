@@ -1,24 +1,31 @@
 <?php if (strlen($this->textBefore)): ?>
 <span class="before"><?php echo $this->textBefore; ?></span>
 <?php endif; ?>
-
 <?php if ($this->multiLine): ?>
-<textarea name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?php echo $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" <?php echo $this->attributes; ?> ><?php echo $this->value; ?></textarea>
+<textarea name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?= $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" <?php echo $this->attributes; ?> ><?php echo $this->value; ?></textarea>
 <?php elseif ($this->slider): ?>
 <div class="slider">
-    <div class="labels">
+    <div class="labels" style="<?= $this->slider_style; ?>">
         <?php
             $i2 = 0;
             for($i = $this->slider_min_value; $i <= $this->slider_max_value; $i++) {
         ?>
             <div class="label">
-                <?= $i ?>
-                {{image::<?= $this->slider_images[$i2]['path']; $i2++; ?>}}
+                <?php if($this->addImage): ?>
+                    <img src="<?= $this->slider_images[$i2]['path']; ?>" /><?php $i2++; ?>
+                <?php else: ?>
+                    <?= $i ?>
+                <?php endif; ?>
             </div>
         <?php } ?>
     </div>
     <div class="input">
-        <input style="margin: 0 calc(((100% / 21) / 2) - 0px) 0 calc(((100% / 21) / 2) - 8px);width: calc(((100% / 21) * 20) + 20px);" type="range" name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?php echo $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" min="<?php echo $this->slider_min_value; ?>" max="<?php echo $this->slider_max_value; ?>" value="<?php echo $this->slider_init_value; ?>" step="1" <?php echo $this->attributes; ?> />
+        <?php
+            $max = max($this->slider_max_value, $this->slider_min_value);
+            $min = min($this->slider_max_value, $this->slider_min_value);
+            $seg = ($max - $min) + 1;
+        ?>
+        <input style="margin: 0 calc(((100% / <?= abs($seg); ?>) / 2)) 0 calc(((100% / <?= abs($seg); ?>) / 2) - 10px);width: calc(((100% / <?= abs($seg); ?>) * <?= abs($seg -1); ?>) + 20px);" type="range" name="<?php echo $this->ctrl_name; ?>" id="ctrl_<?php echo $this->ctrl_id; ?>" class="textarea<?php echo $this->ctrl_class; ?>" min="<?php echo $this->slider_min_value; ?>" max="<?php echo $this->slider_max_value; ?>" value="<?php echo $this->slider_init_value; ?>" step="1" <?php echo $this->attributes; ?> />
     </div>
 </div>
 <?php else: ?>

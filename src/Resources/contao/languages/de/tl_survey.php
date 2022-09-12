@@ -83,7 +83,6 @@ $GLOBALS['TL_LANG']['tl_survey']['texts_legend'] = 'Einleitende und abschließen
 $GLOBALS['TL_LANG']['tl_survey']['misc_legend'] = 'Allgemeine Einstellungen';
 $GLOBALS['TL_LANG']['tl_survey']['surveyPage']['0'] = 'Seite der Umfrage';
 $GLOBALS['TL_LANG']['tl_survey']['surveyPage']['1'] = 'Bitte wählen Sie die Seite aus, auf der Sie die Umfrage durchführen wollen. Bei einer ausgewählten Seite wird eine Start-URL mit dem zugehörigen TAN-Code generiert.';
-
 $GLOBALS['TL_LANG']['tl_survey']['skipEmpty'] = ['Leere Felder auslassen', 'Leere Felder in der E-Mail nicht anzeigen.'];
 $GLOBALS['TL_LANG']['tl_survey']['sendConfirmationMail'] = ['Bestätigung per E-Mail versenden', 'Wenn Sie diese Option wählen, wird eine Bestätigung per E-Mail an den Absender des Formulars versendet.'];
 $GLOBALS['TL_LANG']['tl_survey']['confirmationMailRecipientField'] = ['Formularfeld mit E-Mail-Adresse des Empfängers', 'Wählen Sie hier das Formularfeld, in dem der Absender seine E-Mail-Adresse angibt oder ein Formularfeld, das die Empfänger-Adresse als Wert enthält.'];

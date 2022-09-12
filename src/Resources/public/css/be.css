@@ -32,6 +32,11 @@
 	float: left;
 	min-height: 80px;
 }
+.w33 {
+	width: calc(33% - 30px);
+	float: left;
+	min-height: 80px;
+}
 .w75 {
 	width: calc(75% - 30px);
 	float: left;
@@ -63,11 +68,9 @@ table.tl_cumulated {
 
 .constantsum td.counter {
 	font-weight: bold;
-	border-right: 0px;
 }
 
 .constantsum td.answer {
-	border-left: 0px;
 	text-align: right;
 }
 
@@ -77,11 +80,9 @@ table.tl_cumulated {
 
 .matrix td.counter, .multiplechoice td.counter {
 	font-weight: bold;
-	border-right: 0px;
 }
 
 .matrix td.answer, .multiplechoice td.answer {
-	border-left: 0px;
 	text-align: left;
 }
 
@@ -120,7 +121,6 @@ table.tl_cumulated {
 
 /* the wrapper */
 div.tl_content div.slider {
-	background-color: darkorange;
 	display: flex;
 	flex-direction: column;
 }
@@ -129,17 +129,21 @@ div.tl_content div.slider div.labels {
 	display: flex;
 	flex-direction: row;
 }
-/* a single label or image */
+/* a single label */
 div.tl_content div.slider div.labels div.label {
-	border: 1px solid greenyellow;
 	width: 100%;
 	text-align: center;
-	margin: 0 0px 0 0px;
+	margin: 0;
+	overflow: hidden;
+}
+/* img inside label */
+div.tl_content div.slider div.labels div.label img {
+	width: 100%;
+	height: auto;
 }
 
 /* the 2nd row */
 div.tl_content div.slider div.input {
-	background-color: cornflowerblue;
 }
 div.tl_content div.slider div.input input {
 	margin: 0 1em 0 1em;

@@ -253,7 +253,7 @@ class ContentSurvey extends ContentElement
                 $res->save();
             }
 
-            if (\strlen($pages[$page - 1]['page_template'])) {
+            if (\strlen((string) $pages[$page - 1]['page_template'])) {
                 $this->questionblock_template = $pages[$page - 1]['page_template'];
             }
         }
@@ -609,7 +609,8 @@ class ContentSurvey extends ContentElement
 
                     if (!empty($this->objSurvey->confirmationMailRecipient)) {
                         $varRecipient = $this->objSurvey->confirmationMailRecipient;
-                        $arrRecipient = array_merge($arrRecipient, trimsplit(',', $varRecipient));
+
+                        $arrRecipient = array_merge($arrRecipient ?? [], trimsplit(',', $varRecipient));
                     }
                     $arrRecipient = array_filter(array_unique($arrRecipient));
 
@@ -669,7 +670,7 @@ class ContentSurvey extends ContentElement
                     //$objMailProperties = $this->Formdata->prepareMailData($objMailProperties, $arrSubmitted, $arrFiles, $arrForm, $arrFormFields);
 
                     // Send Mail
-                    $blnConfirmationSent = false;
+                    //$blnConfirmationSent = false;
 
                     if (!empty($objMailProperties->recipients)) {
                         $objMail = new Email();
@@ -704,7 +705,7 @@ class ContentSurvey extends ContentElement
 
                         foreach ($objMailProperties->recipients as $recipient) {
                             $objMail->sendTo($recipient);
-                            $blnConfirmationSent = true;
+                            //$blnConfirmationSent = true;
                         }
                     }
                 }
@@ -807,7 +808,7 @@ class ContentSurvey extends ContentElement
                         //$objMailProperties = $this->Formdata->prepareMailData($objMailProperties, $arrSubmitted, $arrFiles, $arrForm, $arrFormFields);
 
                         // Send Mail
-                        $blnConfirmationSent = false;
+                        //$blnConfirmationSent = false;
 
                         if (!empty($objMailProperties->recipients)) {
                             $objMail = new Email();
@@ -842,7 +843,7 @@ class ContentSurvey extends ContentElement
 
                             foreach ($objMailProperties->recipients as $recipient) {
                                 $objMail->sendTo($recipient);
-                                $blnConfirmationSent = true;
+                                //$blnConfirmationSent = true;
                             }
                         }
                     }

@@ -71,18 +71,13 @@ array_insert($GLOBALS['BE_MOD'], 3, [
     ],
 ]);
 
-//if (TL_MODE === 'BE') {
-//    $GLOBALS['TL_CSS'][] = 'bundles/hschottmsurvey/css/be.css'; # ToDo: set return to |static!
-//}
 $scopeMatcher = System::getContainer()->get('contao.routing.scope_matcher');
 $currentRequest = System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('');
 
 if ($scopeMatcher->isBackendRequest($currentRequest)) {
-    // only BE
-    $GLOBALS['TL_CSS'][] = 'bundles/hschottmsurvey/css/be.css'; // ToDo: set return to |static!
+    $GLOBALS['TL_CSS'][] = 'bundles/hschottmsurvey/css/be.css|static';
 } else {
-    // only FE
-    $GLOBALS['TL_CSS'][] = 'bundles/hschottmsurvey/css/fe.css'; // ToDo: set return to |static!
+    $GLOBALS['TL_CSS'][] = 'bundles/hschottmsurvey/css/fe.css|static';
 }
 
 array_insert($GLOBALS['BE_FFL'], 15, [

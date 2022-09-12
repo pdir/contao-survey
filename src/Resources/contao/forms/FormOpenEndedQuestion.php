@@ -89,10 +89,11 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                         $this->slider_min_value = $varValue['slider_min_value'];
                         $this->slider_init_value = $varValue['slider_init_value'];
                         $this->slider_max_value = $varValue['slider_max_value'];
+                        $this->slider_style = $varValue['slider_style'];
                         $this->multiSRC = $varValue['multiSRC'];
-dump($varValue['multiSRC']);
                         $this->orderSRC = $varValue['orderSRC'];
-dump($varValue['orderSRC']);
+                        $this->addImage = $varValue['addImage'];
+
                         break;
                 }
                 $method = 'setData_'.$varValue['openended_subtype'];
@@ -166,73 +167,26 @@ dump($varValue['orderSRC']);
         $template->slider_min_value = $this->slider_min_value;
         $template->slider_init_value = $this->slider_init_value;
         $template->slider_max_value = $this->slider_max_value;
+        $template->slider_style = $this->slider_style;
+        $template->addImage = $this->addImage;
 
-        $multiSRC = StringUtil::deserialize($this->multiSRC);
+        if((bool)$this->addImage) {
+            $multiSRC = StringUtil::deserialize($this->multiSRC);
 
-        if (empty($multiSRC) || !\is_array($multiSRC)) {
-            $template->slider_images = null;
-        } else {
-            // Get the file entries from the database
-            $objFiles = FilesModel::findMultipleByUuids($multiSRC);
-
-            if (null === $objFiles) {
-                $template->slider_images = false;
+            if (empty($multiSRC) || !\is_array($multiSRC)) {
+                $template->slider_images = null;
             } else {
-                while ($objFiles->next()) {
-                    // Continue if the files has been processed or does not exist
-                    $fullPath = System::getContainer()->getParameter('kernel.project_dir').'/'.$objFiles->path;
+                // Get the file entries from the database
+                $objFiles = FilesModel::findMultipleByUuids($multiSRC);
 
-                    if (!file_exists($fullPath)) {
-                        continue;
-                    }
-
-                    if ('file' === $objFiles->type) {
-                        $objFile = new File($objFiles->path);
-
-                        if (!$objFile->isImage) {
-                            continue;
-                        }
-
-                        // Add the image
-                        $images[] = [
-                            'id' => $objFiles->id,
-                            'uuid' => $objFiles->uuid,
-                            'name' => $objFile->basename,
-                            'path' => $objFile->path,
-                            'filesModel' => $objFiles->current()
-                        ];
-                    }
+                if (null === $objFiles) {
+                    $template->slider_images = false;
+                } else {
+                    // build a special image array from objFiles
+                    $images = $this->buildImageArray($objFiles);
+                    // sort
+                    $images = $this->sortImageArray($images);
                 }
-
-                if ($this->orderSRC) {
-                    dump($this->orderSRC);
-                    $tmp = StringUtil::deserialize($this->orderSRC);
-                    dump($tmp);
-
-                    if (!empty($tmp) && \is_array($tmp)) {
-                        // Remove all values
-                        $arrOrder = array_map(static function (): void {}, array_flip($tmp));
-
-                        // Move the matching elements to their position in $arrOrder
-                        foreach ($images as $k => $v) {
-                            if (\array_key_exists($v['uuid'], $arrOrder)) {
-                                $arrOrder[$v['uuid']] = $v;
-                                unset($images[$k]);
-                            }
-                        }
-
-                        // Append the left-over images at the end
-                        if (!empty($images)) {
-                            $arrOrder = array_merge($arrOrder, array_values($images));
-                        }
-
-                        // Remove empty (unreplaced) entries
-                        $images = array_values(array_filter($arrOrder));
-                        unset($arrOrder);
-                    }
-                }
-
-dump($images);
                 $template->slider_images = $images;
             }
         }
@@ -248,6 +202,81 @@ dump($images);
 
         return $widget;
     }
+
+    /**
+     * @param $objFiles
+     * @return array
+     * @throws \Exception
+     */
+    protected function buildImageArray($objFiles): array
+    {
+        $images = [];
+
+        while ($objFiles->next()) {
+            // Continue if the files has been processed or does not exist
+            $fullPath = System::getContainer()->getParameter('kernel.project_dir').'/'.$objFiles->path;
+
+            if (!file_exists($fullPath)) {
+                continue;
+            }
+
+            if ('file' === $objFiles->type) {
+                $objFile = new File($objFiles->path);
+
+                if (!$objFile->isImage) {
+                    continue;
+                }
+
+                // Add the image
+                $images[] = [
+                    'id' => $objFiles->id,
+                    'uuid' => $objFiles->uuid,
+                    'name' => $objFile->basename,
+                    'path' => $objFile->path,
+                    'filesModel' => $objFiles->current()
+                ];
+            }
+        }
+
+        return $images;
+    }
+
+    /**
+     * @param $images
+     * @return array
+     */
+    protected function sortImageArray($images): array
+    {
+        if ($this->orderSRC)
+        {
+            $tmp = StringUtil::deserialize($this->orderSRC);
+
+            if (!empty($tmp) && \is_array($tmp))
+            {
+                // Remove all values
+                $arrOrder = array_map(static function (): void {}, array_flip($tmp));
+
+                // Move the matching elements to their position in $arrOrder
+                foreach ($images as $k => $v) {
+                    if (\array_key_exists($v['uuid'], $arrOrder)) {
+                        $arrOrder[$v['uuid']] = $v;
+                        unset($images[$k]);
+                    }
+                }
+
+                // Append the left-over images at the end
+                if (!empty($images)) {
+                    $arrOrder = array_merge($arrOrder, array_values($images));
+                }
+
+                // Remove empty (unreplaced) entries
+                $images = array_values(array_filter($arrOrder));
+                unset($arrOrder);
+            }
+        }
+        return $images;
+    }
+
 
     protected function setData_oe_singleline($varValue): void
     {
