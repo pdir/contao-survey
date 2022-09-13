@@ -1,17 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * @copyright  Helmut Schottmüller 2005-2018 <http://github.com/hschottm>
  * @author     Helmut Schottmüller (hschottm)
  * @package    contao-survey
  * @license    LGPL-3.0+, CC-BY-NC-3.0
- * @see	      https://github.com/hschottm/survey_ce
+ * @see	       https://github.com/hschottm/survey_ce
+ *
+ * forked by pdir
+ * @author     Mathias Arzberger <develop@pdir.de>
+ * @link       https://github.com/pdir/contao-survey
  */
 
 $GLOBALS['TL_LANG']['tl_survey_question']['title']['0'] = 'Titel';
 $GLOBALS['TL_LANG']['tl_survey_question']['title']['1'] = 'Bitte geben Sie den Titel der Frage ein.';
-$GLOBALS['TL_LANG']['tl_survey_question']['alias']['0'] = "Alias";
-$GLOBALS['TL_LANG']['tl_survey_question']['alias']['1'] = "Der Fragenalias ist eine eindeutige Referenz, die anstelle der numerischen Fragen-ID aufgerufen werden kann.";
+$GLOBALS['TL_LANG']['tl_survey_question']['alias']['0'] = 'Alias';
+$GLOBALS['TL_LANG']['tl_survey_question']['alias']['1'] = 'Der Fragenalias ist eine eindeutige Referenz, die anstelle der numerischen Fragen-ID aufgerufen werden kann.';
 $GLOBALS['TL_LANG']['tl_survey_question']['author']['0'] = 'Autor';
 $GLOBALS['TL_LANG']['tl_survey_question']['author']['1'] = 'Bitte geben Sie den Namen des Autors ein.';
 $GLOBALS['TL_LANG']['tl_survey_question']['questiontype']['0'] = 'Fragentyp';
@@ -107,12 +113,15 @@ $GLOBALS['TL_LANG']['tl_survey_question']['delete']['1'] = 'Frage ID %s löschen
 $GLOBALS['TL_LANG']['tl_survey_question']['details']['0'] = 'Detaillierte Statistik';
 $GLOBALS['TL_LANG']['tl_survey_question']['details']['1'] = 'Detaillierte Statistik der Frage ID %s anzeigen';
 $GLOBALS['TL_LANG']['tl_survey_question']['openended'] = 'Offene Frage';
+
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_singleline'] = 'Einzeilig';
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_multiline'] = 'Mehrzeilig';
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_integer'] = 'Ganzzahl';
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_float'] = 'Kommazahl';
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_date'] = 'Datum';
 $GLOBALS['TL_LANG']['tl_survey_question']['oe_time'] = 'Uhrzeit';
+$GLOBALS['TL_LANG']['tl_survey_question']['oe_slider'] = 'Slider';
+
 $GLOBALS['TL_LANG']['tl_survey_question']['multiplechoice'] = 'Multiple Choice Frage';
 $GLOBALS['TL_LANG']['tl_survey_question']['mc_singleresponse'] = 'Einfachauswahl';
 $GLOBALS['TL_LANG']['tl_survey_question']['mc_multipleresponse'] = 'Mehrfachauswahl';
@@ -156,3 +165,10 @@ $GLOBALS['TL_LANG']['tl_survey_question']['buttontitle_matrixcolumn_copy'] = 'Sp
 $GLOBALS['TL_LANG']['tl_survey_question']['buttontitle_matrixcolumn_delete'] = 'Spalte löschen';
 $GLOBALS['TL_LANG']['tl_survey_question']['cssClass'] = ['CSS-Klasse', 'Hier können Sie eine oder mehrere CSS-Klassen eingeben.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['expert_legend'] = 'Experten-Einstellungen';
+$GLOBALS['TL_LANG']['tl_survey_question']['slider_legend'] = 'Slider Einstellungen';
+$GLOBALS['TL_LANG']['tl_survey_question']['addImage'] = ['Bilder oder Grafiken hinzufügen', 'Hier können Sie jedem Wert im Bereich des Sliders eine Grafik zuordnen.'];
+$GLOBALS['TL_LANG']['tl_survey_question']['multiSRC'] = ['Bilder/Grafiken auswählen.', 'Wählen Sie hier die Bilder/Grafiken aus, die den einzelnen Werten zugeordnet werden sollen. Sie können danach die Reihenfolge durch Drag & Drop selbst festlegen.'];
+$GLOBALS['TL_LANG']['tl_survey_question']['slider_min_value'] = ['kleinster Wert', 'Geben Sie hier den Wert an, bei dem der Bereich des Sliders beginnen soll.'];
+$GLOBALS['TL_LANG']['tl_survey_question']['slider_init_value'] = ['Vorbelegung', 'Geben Sie hier den Wert an, auf den der Slider voreingestellt sein soll.'];
+$GLOBALS['TL_LANG']['tl_survey_question']['slider_max_value'] = ['größter Wert', 'Geben Sie hier den Wert an, bei dem der Bereich des Sliders enden soll.'];
+$GLOBALS['TL_LANG']['tl_survey_question']['slider_style'] = ['CSS-Styles (max. 500 Zeichen)', 'Geben Sie hier eine oder mehrere Style-Anweisungen ein, durch die die Skale formatiert werden soll.'];

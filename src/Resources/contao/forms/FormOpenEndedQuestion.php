@@ -1,18 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * @copyright  Helmut Schottmüller 2005-2018 <http://github.com/hschottm>
  * @author     Helmut Schottmüller (hschottm)
  * @package    contao-survey
  * @license    LGPL-3.0+, CC-BY-NC-3.0
- * @see	      https://github.com/hschottm/survey_ce
+ * @see	       https://github.com/hschottm/survey_ce
+ *
+ * forked by pdir
+ * @author     Mathias Arzberger <develop@pdir.de>
+ * @link       https://github.com/pdir/contao-survey
  */
 
 namespace Hschottm\SurveyBundle;
 
 use Contao\Date;
+use Contao\File;
+use Contao\FilesModel;
 use Contao\FrontendTemplate;
 use Contao\StringUtil;
+use Contao\System;
 
 /**
  * Class FormOpenEndedQuestion.
@@ -44,45 +53,64 @@ class FormOpenEndedQuestion extends FormQuestionWidget
      * @param mixed $strKey
      * @param mixed $varValue
      */
-    public function __set($strKey, $varValue)
+    public function __set($strKey, $varValue): void
     {
         switch ($strKey) {
             case 'surveydata':
                 parent::__set($strKey, $varValue);
-                $this->strClass = 'openended'.((\strlen($varValue['cssClass']) ? (' '.$varValue['cssClass']) : ''));
+                $this->strClass = 'openended'.((\strlen($varValue['cssClass']) ? ' '.$varValue['cssClass'] : ''));
                 $this->strTextBefore = $varValue['openended_textbefore'];
                 $this->strTextAfter = $varValue['openended_textafter'];
                 $this->questiontype = $varValue['openended_subtype'];
+
                 switch ($this->questiontype) {
                     case 'oe_integer':
                     case 'oe_float':
-                        $this->rgxp = 'digit';
+                    $this->rgxp = 'digit';
                         $this->strLowerBound = $varValue['lower_bound'];
                         $this->strUpperBound = $varValue['upper_bound'];
                         break;
+
                     case 'oe_date':
                         $this->rgxp = 'date';
                         $this->strLowerBound = $varValue['lower_bound_date'];
                         $this->strUpperBound = $varValue['upper_bound_date'];
                         break;
+
                     case 'oe_time':
                         $this->rgxp = 'time';
                         $this->strLowerBound = $varValue['lower_bound_time'];
                         $this->strUpperBound = $varValue['upper_bound_time'];
                         break;
+
+                    case 'oe_slider':
+                        $this->rgxp = 'digit';
+                        $this->strClass .= ' slider';
+                        $this->slider_min_value = $varValue['slider_min_value'];
+                        $this->slider_init_value = $varValue['slider_init_value'];
+                        $this->slider_max_value = $varValue['slider_max_value'];
+                        $this->slider_style = $varValue['slider_style'];
+                        $this->multiSRC = $varValue['multiSRC'];
+                        $this->orderSRC = $varValue['orderSRC'];
+                        $this->addImage = $varValue['addImage'];
+
+                        break;
                 }
                 $method = 'setData_'.$varValue['openended_subtype'];
+
                 if (method_exists($this, $method)) {
                     $this->$method($varValue);
                 }
                 break;
+
             case 'maxlength':
-                $this->arrAttributes[$strKey] = ($varValue > 0) ? $varValue : '';
+                $this->arrAttributes[$strKey] = $varValue > 0 ? $varValue : '';
                 break;
 
             case 'value':
                 $this->varValue = $varValue;
-                if (0 != strcmp($this->questiontype, 'oe_multiline')) {
+
+                if (0 !== strcmp($this->questiontype, 'oe_multiline')) {
                     $this->arrAttributes['value'] = $varValue;
                 }
 
@@ -110,7 +138,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
     /**
      * Validate input and set value.
      */
-    public function validate()
+    public function validate(): void
     {
         $submit = $this->getPost('question');
         $varInput = $this->validator(deserialize($submit[$this->id]));
@@ -132,8 +160,37 @@ class FormOpenEndedQuestion extends FormQuestionWidget
         $template->ctrl_name = StringUtil::specialchars($this->strName);
         $template->ctrl_id = StringUtil::specialchars($this->strId);
         $template->ctrl_class = (\strlen($this->strClass) ? ' '.$this->strClass : '');
-        $template->multiLine = (0 == strcmp($this->questiontype, 'oe_multiline'));
-        $template->singleLine = (0 == strcmp($this->questiontype, 'oe_singleline'));
+        $template->multiLine = 0 === strcmp($this->questiontype, 'oe_multiline');
+        $template->singleLine = 0 === strcmp($this->questiontype, 'oe_singleline');
+        /* question type slider */
+        $template->slider = 0 === strcmp($this->questiontype, 'oe_slider');
+        $template->slider_min_value = $this->slider_min_value;
+        $template->slider_init_value = $this->slider_init_value;
+        $template->slider_max_value = $this->slider_max_value;
+        $template->slider_style = $this->slider_style;
+        $template->addImage = $this->addImage;
+
+        if((bool)$this->addImage) {
+            $multiSRC = StringUtil::deserialize($this->multiSRC);
+
+            if (empty($multiSRC) || !\is_array($multiSRC)) {
+                $template->slider_images = null;
+            } else {
+                // Get the file entries from the database
+                $objFiles = FilesModel::findMultipleByUuids($multiSRC);
+
+                if (null === $objFiles) {
+                    $template->slider_images = false;
+                } else {
+                    // build a special image array from objFiles
+                    $images = $this->buildImageArray($objFiles);
+                    // sort
+                    $images = $this->sortImageArray($images);
+                }
+                $template->slider_images = $images;
+            }
+        }
+        /* end question type slider */
         $template->value = $this->varValue;
         $template->textBefore = $this->strTextBefore;
         $template->textAfter = $this->strTextAfter;
@@ -146,50 +203,130 @@ class FormOpenEndedQuestion extends FormQuestionWidget
         return $widget;
     }
 
-    protected function setData_oe_singleline($varValue)
+    /**
+     * @param $objFiles
+     * @return array
+     * @throws \Exception
+     */
+    protected function buildImageArray($objFiles): array
+    {
+        $images = [];
+
+        while ($objFiles->next()) {
+            // Continue if the files has been processed or does not exist
+            $fullPath = System::getContainer()->getParameter('kernel.project_dir').'/'.$objFiles->path;
+
+            if (!file_exists($fullPath)) {
+                continue;
+            }
+
+            if ('file' === $objFiles->type) {
+                $objFile = new File($objFiles->path);
+
+                if (!$objFile->isImage) {
+                    continue;
+                }
+
+                // Add the image
+                $images[] = [
+                    'id' => $objFiles->id,
+                    'uuid' => $objFiles->uuid,
+                    'name' => $objFile->basename,
+                    'path' => $objFile->path,
+                    'filesModel' => $objFiles->current()
+                ];
+            }
+        }
+
+        return $images;
+    }
+
+    /**
+     * @param $images
+     * @return array
+     */
+    protected function sortImageArray($images): array
+    {
+        if ($this->orderSRC)
+        {
+            $tmp = StringUtil::deserialize($this->orderSRC);
+
+            if (!empty($tmp) && \is_array($tmp))
+            {
+                // Remove all values
+                $arrOrder = array_map(static function (): void {}, array_flip($tmp));
+
+                // Move the matching elements to their position in $arrOrder
+                foreach ($images as $k => $v) {
+                    if (\array_key_exists($v['uuid'], $arrOrder)) {
+                        $arrOrder[$v['uuid']] = $v;
+                        unset($images[$k]);
+                    }
+                }
+
+                // Append the left-over images at the end
+                if (!empty($images)) {
+                    $arrOrder = array_merge($arrOrder, array_values($images));
+                }
+
+                // Remove empty (unreplaced) entries
+                $images = array_values(array_filter($arrOrder));
+                unset($arrOrder);
+            }
+        }
+        return $images;
+    }
+
+
+    protected function setData_oe_singleline($varValue): void
     {
         if (\strlen($varValue['openended_width'])) {
             $this->arrAttributes['size'] = StringUtil::specialchars($varValue['openended_width']);
         }
+
         if (\strlen($varValue['openended_maxlen'])) {
             $this->arrAttributes['maxlength'] = StringUtil::specialchars($varValue['openended_maxlen']);
         }
+
         if (\strlen($varValue['openended_textinside'])) {
             $this->arrAttributes['value'] = StringUtil::specialchars($varValue['openended_textinside']);
         }
-        if (\strlen($this->varValue)) {
+
+        if (\strlen((string) $this->varValue)) {
             $this->arrAttributes['value'] = StringUtil::specialchars($this->varValue);
         }
     }
 
-    protected function setData_oe_integer($varValue)
+    protected function setData_oe_integer($varValue): void
     {
         $this->setData_oe_singleline($varValue);
     }
 
-    protected function setData_oe_float($varValue)
+    protected function setData_oe_float($varValue): void
     {
         $this->setData_oe_singleline($varValue);
     }
 
-    protected function setData_oe_date($varValue)
+    protected function setData_oe_date($varValue): void
     {
         $this->setData_oe_singleline($varValue);
     }
 
-    protected function setData_oe_time($varValue)
+    protected function setData_oe_time($varValue): void
     {
         $this->setData_oe_singleline($varValue);
     }
 
-    protected function setData_oe_multiline($varValue)
+    protected function setData_oe_multiline($varValue): void
     {
         if (\strlen($varValue['openended_rows'])) {
             $this->arrAttributes['rows'] = StringUtil::specialchars($varValue['openended_rows']);
         }
+
         if (\strlen($varValue['openended_cols'])) {
             $this->arrAttributes['cols'] = StringUtil::specialchars($varValue['openended_cols']);
         }
+
         if (!\strlen($this->varValue)) {
             if (\strlen($varValue['openended_textinside'])) {
                 $this->varValue = $varValue['openended_textinside'];
@@ -208,8 +345,9 @@ class FormOpenEndedQuestion extends FormQuestionWidget
     protected function validator($varInput)
     {
         $oldlabel = $this->label;
-        $label = (\strlen($this->label)) ? $this->label : $this->title;
+        $label = \strlen((string) $this->label) ? $this->label : $this->title;
         $this->label = $label;
+
         if (\is_array($varInput)) {
             $result = parent::validator($varInput);
         } else {
@@ -245,6 +383,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
             switch ($this->questiontype) {
                 case 'oe_integer':
                     $value = (int) $varInput;
+
                     if ($value < $lower) {
                         $this->addError(sprintf($strErrMsg, $value, $this->label, $lower));
                     }
@@ -253,6 +392,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                 case 'oe_float':
                     $lower = (float) ($this->strLowerBound);
                     $value = (float) $varInput;
+
                     if ($value < $lower) {
                         $this->addError(sprintf($strErrMsg, $value, $this->label, $lower));
                     }
@@ -263,6 +403,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                     // This is not well documented in .../Date.php
                     $objDateValue = new Date($varInput, $GLOBALS['TL_CONFIG']['dateFormat']);
                     $value = $objDateValue->timestamp;
+
                     if ($value < $lower) {
                         $objDateLower = new Date($lower, $GLOBALS['TL_CONFIG']['dateFormat']);
                         $this->addError(sprintf($strErrMsg, $objDateValue->date, $this->label, $objDateLower->date));
@@ -274,6 +415,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                 case 'oe_time':
                     $objDateValue = new Date($varInput, $GLOBALS['TL_CONFIG']['timeFormat']);
                     $value = $objDateValue->timestamp;
+
                     if ($value < $lower) {
                         $objDateLower = new Date($lower, $GLOBALS['TL_CONFIG']['timeFormat']);
                         $this->addError(sprintf($strErrMsg, $objDateValue->time, $this->label, $objDateLower->time));
@@ -291,6 +433,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
             switch ($this->questiontype) {
                 case 'oe_integer':
                     $value = (int) $varInput;
+
                     if ($value > $upper) {
                         $this->addError(sprintf($strErrMsg, $value, $this->label, $upper));
                     }
@@ -299,6 +442,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                 case 'oe_float':
                     $upper = (float) ($this->strUpperBound);
                     $value = (float) $varInput;
+
                     if ($value > $upper) {
                         $this->addError(sprintf($strErrMsg, $value, $this->label, $upper));
                     }
@@ -307,6 +451,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                 case 'oe_date':
                     $objDateValue = new Date($varInput, $GLOBALS['TL_CONFIG']['dateFormat']);
                     $value = $objDateValue->timestamp;
+
                     if ($value > $upper) {
                         $objDateUpper = new Date($upper, $GLOBALS['TL_CONFIG']['dateFormat']);
                         $this->addError(sprintf($strErrMsg, $objDateValue->date, $this->label, $objDateUpper->date));
@@ -318,6 +463,7 @@ class FormOpenEndedQuestion extends FormQuestionWidget
                 case 'oe_time':
                     $objDateValue = new Date($varInput, $GLOBALS['TL_CONFIG']['timeFormat']);
                     $value = $objDateValue->timestamp;
+
                     if ($value > $upper) {
                         $objDateUpper = new Date($upper, $GLOBALS['TL_CONFIG']['timeFormat']);
                         $this->addError(sprintf($strErrMsg, $objDateValue->time, $this->label, $objDateUpper->time));

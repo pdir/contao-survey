@@ -1,16 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * @copyright  Helmut Schottmüller 2005-2018 <http://github.com/hschottm>
  * @author     Helmut Schottmüller (hschottm)
  * @package    contao-survey
  * @license    LGPL-3.0+, CC-BY-NC-3.0
- * @see	      https://github.com/hschottm/survey_ce
+ * @see	       https://github.com/hschottm/survey_ce
+ *
+ * forked by pdir
+ * @author     Mathias Arzberger <develop@pdir.de>
+ * @link       https://github.com/pdir/contao-survey
  */
 
 use Contao\Backend;
 use Contao\Input;
+use Contao\MemberModel;
 use Contao\System;
+use Hschottm\SurveyBundle\SurveyPageModel;
+use Hschottm\SurveyBundle\SurveyParticipantModel;
 
 $GLOBALS['TL_DCA']['tl_survey_participant'] = [
     // Config
@@ -20,10 +29,10 @@ $GLOBALS['TL_DCA']['tl_survey_participant'] = [
         'doNotCopyRecords' => true,
         'enableVersioning' => true,
         'closed' => true,
-    'onload_callback' => [
-        ['tl_survey_participant', 'checkPermission'],
-    ],
-    'ondelete_callback' => [
+        'onload_callback' => [
+            ['tl_survey_participant', 'checkPermission'],
+        ],
+        'ondelete_callback' => [
             ['tl_survey_participant', 'deleteParticipant'],
         ],
         'sql' => [
@@ -145,9 +154,9 @@ class tl_survey_participant extends Backend
      *
      * @throws Contao\CoreBundle\Exception\AccessDeniedException
      */
-    public function checkPermission()
+    public function checkPermission(): void
     {
-        switch (Input::get('act')) {
+        switch ((string) Input::get('act')) {
           case 'select':
           case 'show':
           case 'edit':
@@ -155,30 +164,34 @@ class tl_survey_participant extends Backend
           case 'toggle':
               // Allow
               break;
+
           case 'editAll':
           case 'deleteAll':
           case 'overrideAll':
               /** @var Symfony\Component\HttpFoundation\Session\SessionInterface $objSession */
               $objSession = System::getContainer()->get('session');
               $session = $objSession->all();
-              $res = \Hschottm\SurveyBundle\SurveyParticipantModel::findBy('pid', Input::get('id'));
-              if (null != $res && $res->count() >= 1) {
+              $res = SurveyParticipantModel::findBy('pid', Input::get('id'));
+
+              if (null !== $res && $res->count() >= 1) {
                   $session['CURRENT']['IDS'] = array_values($res->fetchEach('id'));
                   $objSession->replace($session);
               }
               break;
+
           default:
-              if (\strlen(Input::get('act'))) {
+              if (strlen((string) Input::get('act'))) {
                   throw new Contao\CoreBundle\Exception\AccessDeniedException('Invalid command "'.Input::get('act').'.');
               }
               break;
       }
     }
 
-    public function deleteParticipant($dc)
+    public function deleteParticipant($dc): void
     {
-        $res = \Hschottm\SurveyBundle\SurveyParticipantModel::findOneBy('id', $dc->id);
-        if (null != $res) {
+        $res = SurveyParticipantModel::findOneBy('id', $dc->id);
+
+        if (null !== $res) {
             setcookie('TLsvy_'.$res->pid, $res->pin, time() - 3600, '/');
             $objDelete = $this->Database->prepare('DELETE FROM tl_survey_pin_tan WHERE (pid=? AND pin=?)')->execute($res->pid, $res->pin);
             $objDelete = $this->Database->prepare('DELETE FROM tl_survey_result WHERE (pid=? AND pin=?)')->execute($res->pid, $res->pin);
@@ -188,8 +201,9 @@ class tl_survey_participant extends Backend
 
     public function getUsername($uid)
     {
-        $user = \Contao\MemberModel::findOneBy('id', $uid);
-        if (null != $user) {
+        $user = MemberModel::findOneBy('id', $uid);
+
+        if (null !== $user) {
             return trim($user->firstname.' '.$user->lastname);
         }
 
@@ -200,21 +214,20 @@ class tl_survey_participant extends Backend
     {
         // we ignore the label param, the row has it all
         $finished = (int) ($row['finished']);
-        $result = sprintf(
+
+        return sprintf(
             '<div>%s, <strong>%s</strong> <span style="color: #7f7f7f;">[%s%s]</span></div>',
-            date($GLOBALS['TL_CONFIG']['datimFormat'], $row['tstamp']),
-            ($row['uid'] > 0)
+            date($GLOBALS['TL_CONFIG']['datimFormat'], (int) $row['tstamp']),
+            $row['uid'] > 0
                 ? $this->getUsername($row['uid'])
                 : $row['pin'],
-            ($finished)
+            $finished
                 ? $GLOBALS['TL_LANG']['tl_survey_participant']['finished']
                 : $GLOBALS['TL_LANG']['tl_survey_participant']['running'],
-            ($finished)
+            $finished
                 ? ''
                 : ' ('.$row['lastpage'].'/'.$this->getPageCount($row['pid']).')'
         );
-
-        return $result;
     }
 
     /**
@@ -228,8 +241,9 @@ class tl_survey_participant extends Backend
     protected function getPageCount($survey_id)
     {
         if (!isset($this->pageCount)) {
-            $res = \Hschottm\SurveyBundle\SurveyPageModel::findBy('pid', $survey_id);
-            if (null != $res) {
+            $res = SurveyPageModel::findBy('pid', $survey_id);
+
+            if (null !== $res) {
                 $this->pageCount = $res->count();
             } else {
                 $this->pageCount = 0;

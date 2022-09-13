@@ -16,6 +16,33 @@
 	color: #7f7f7f;
 }
 
+/* some new css classes for the widget eval.tl_class */
+.w125 {
+	width: calc(12.5% - 30px);
+	float: left;
+	min-height: 80px;
+}
+.w20 {
+	width: calc(20% - 30px);
+	float: left;
+	min-height: 80px;
+}
+.w25 {
+	width: calc(25% - 30px);
+	float: left;
+	min-height: 80px;
+}
+.w33 {
+	width: calc(33% - 30px);
+	float: left;
+	min-height: 80px;
+}
+.w75 {
+	width: calc(75% - 30px);
+	float: left;
+	min-height: 80px;
+}
+
 /* backend statistics details */
 
 td.first {
@@ -41,11 +68,9 @@ table.tl_cumulated {
 
 .constantsum td.counter {
 	font-weight: bold;
-	border-right: 0px;
 }
 
 .constantsum td.answer {
-	border-left: 0px;
 	text-align: right;
 }
 
@@ -55,11 +80,9 @@ table.tl_cumulated {
 
 .matrix td.counter, .multiplechoice td.counter {
 	font-weight: bold;
-	border-right: 0px;
 }
 
 .matrix td.answer, .multiplechoice td.answer {
-	border-left: 0px;
 	text-align: left;
 }
 
@@ -94,4 +117,34 @@ table.tl_cumulated {
 }
 .tl_left.surveypage img {
 	vertical-align: text-top;
+}
+
+/* the wrapper */
+div.tl_content div.slider {
+	display: flex;
+	flex-direction: column;
+}
+/* the 1st row */
+div.tl_content div.slider div.labels {
+	display: flex;
+	flex-direction: row;
+}
+/* a single label */
+div.tl_content div.slider div.labels div.label {
+	width: 100%;
+	text-align: center;
+	margin: 0;
+	overflow: hidden;
+}
+/* img inside label */
+div.tl_content div.slider div.labels div.label img {
+	width: 100%;
+	height: auto;
+}
+
+/* the 2nd row */
+div.tl_content div.slider div.input {
+}
+div.tl_content div.slider div.input input {
+	margin: 0 1em 0 1em;
 }
