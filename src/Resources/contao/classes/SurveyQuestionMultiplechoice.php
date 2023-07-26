@@ -536,8 +536,10 @@ class SurveyQuestionMultiplechoice extends SurveyQuestion
                             $emptyAnswer = true;
                         }
                     }
-                    $strAnswer = ($emptyAnswer ? $arrAnswers['value'].' - ' : '').$this->choices[$arrAnswers['value']]['choice'];
-
+                    $strAnswer = '';
+                    if (is_array($this->choices[$arrAnswers['value']])) {
+                        $strAnswer = ($emptyAnswer ? $arrAnswers['value'].' - ' : '').$this->choices[$arrAnswers['value']]['choice'];
+                    }
                     if ($this->arrData['addother'] && ($arrAnswers['value'] === \count($this->choices))) {
                         $strAnswer .= ': '.StringUtil::decodeEntities($arrAnswers['other']);
                     }
