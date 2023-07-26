@@ -220,7 +220,7 @@ class tl_survey_participant extends Backend
 
         return sprintf(
             '<div>%s, <strong>%s</strong> <span style="color: #7f7f7f;">[%s%s]</span></div>',
-            date($GLOBALS['TL_CONFIG']['datimFormat'], $row['tstamp']),
+            date($GLOBALS['TL_CONFIG']['datimFormat'], (int)$row['tstamp']),
             $row['uid'] > 0
                 ? $this->getUsername($row['uid'])
                 : $row['pin'],
