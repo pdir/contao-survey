@@ -25,24 +25,18 @@ $GLOBALS['TL_LANG']['tl_survey_pin_tan']['export'] = 'Export';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['tan_used'] = 'The TAN code is in use';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['tan_new'] = 'The TAN code is not in use';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['key'] = 'TAN generated at:';
-$GLOBALS['TL_LANG']['tl_survey_pin_tan']['nrOfTAN'] = ['Number of TAN codes', 'Please enter the number of the TAN codes you want to create.'];
-$GLOBALS['TL_LANG']['tl_survey_pin_tan']['memberGroupId'] = [
-    'for members of the group',
-    'Select here a member group or &raquo;all members&laquo; for all members.',
-    'no group (all active members)',
-];
-// only for the xls exporter
-$GLOBALS['TL_LANG']['tl_survey_pin_tan']['member_id'] = ['Member', ''];
-
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['invited'] = 'Member invited at:';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['reminded'] = 'Member reminded with';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['reminder'] = '. reminder ';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['not_yet'] = 'not yet';
+$GLOBALS['TL_LANG']['tl_survey_pin_tan']['nrOfTAN'] = ['Number of TAN codes', 'Please enter the number of the TAN codes you want to create.'];
+$GLOBALS['TL_LANG']['tl_survey_pin_tan']['memberGroupId'] = ['for members of the group', 'Select here a member group or &raquo;all members&laquo; for all members.', 'no group (all active members)',];
+// only for the xls exporter
+$GLOBALS['TL_LANG']['tl_survey_pin_tan']['member_id'] = ['Member', ''];
 
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['tan'] = ['TAN', 'Transaction number (TAN code)'];
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['tstamp'] = ['Created', 'Created'];
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['used'] = ['TAN is used', 'The TAN has been used by a survey participant'];
-
 // new TAN generation
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['success'] = '%s TANs have been generated. %s TANs are unused and have been retained.';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['error'] = 'No TANs were generated because no members could be identified for this survey. Please check whether the members in question are activated or not blocked. No TANs are generated for blocked and deactivated members.';
@@ -125,3 +119,7 @@ $GLOBALS['TL_LANG']['tl_survey_pin_tan']['button_reminder_cancel'] = 'Cancel';
 // member invite messages
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['remind_result_template'] = '%s reminders were sent, %s reminders were skipped.';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['remind_no_reminder_available'] = 'The notification for the reminder given in the survey is not available.';
+
+// export label
+System::loadLanguageFile('tl_survey');
+$GLOBALS['TL_LANG']['tl_survey_pin_tan']['surveyPage'] = $GLOBALS['TL_LANG']['tl_survey']['surveyPage'];

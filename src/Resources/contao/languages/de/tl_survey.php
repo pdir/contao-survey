@@ -107,6 +107,5 @@ $GLOBALS['TL_LANG']['tl_survey']['resultCategories_'] = [
     'id' => ['ID', 'Die interne ID der Kategorie. Kann nicht bearbeitet werden.'],
     'category' => ['Titel', 'Der Titel der Kategorie.'],
 ];
-
 // unused?
 $GLOBALS['TL_LANG']['tl_survey']['skipEmpty'] = ['Leere Felder auslassen', 'Leere Felder in der E-Mail nicht anzeigen.'];

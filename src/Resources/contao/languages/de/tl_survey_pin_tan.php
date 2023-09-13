@@ -29,13 +29,8 @@ $GLOBALS['TL_LANG']['tl_survey_pin_tan']['invited'] = 'Mitglied wurde zur Umfrag
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['reminded'] = 'Mitglied wurde an die Umfrage erinnert am:';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['reminder'] = '. Erinnerung am: ';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['not_yet'] = 'noch nicht';
-
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['nrOfTAN'] = ['Anzahl der TAN-Codes', 'Bitte geben Sie die Anzahl der TAN-Codes ein, die Sie erzeugen möchten.'];
-$GLOBALS['TL_LANG']['tl_survey_pin_tan']['memberGroupId'] = [
-    'für Mitglieder der Gruppe',
-    'Wählen Sie hier eine Mitgliedergruppe oder &raquo;alle Mitglieder&laquo; für alle Mitglieder.',
-    'keine Gruppe (alle aktiven Mitglieder)',
-];
+$GLOBALS['TL_LANG']['tl_survey_pin_tan']['memberGroupId'] = ['für Mitglieder der Gruppe', 'Wählen Sie hier eine Mitgliedergruppe oder &raquo;alle Mitglieder&laquo; für alle Mitglieder.', 'keine Gruppe (alle aktiven Mitglieder)',];
 // only for the xls exporter
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['member_id'] = ['Mitglied', ''];
 
@@ -127,4 +122,5 @@ $GLOBALS['TL_LANG']['tl_survey_pin_tan']['remind_result_template'] = 'Es wurden 
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['remind_no_reminder_available'] = 'Die in der Umfrage angegebene Notification für die Erinnerung ist nicht vorhanden.';
 
 // export label
+System::loadLanguageFile('tl_survey');
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['surveyPage'] = $GLOBALS['TL_LANG']['tl_survey']['surveyPage'];

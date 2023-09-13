@@ -30,23 +30,10 @@ $GLOBALS['TL_LANG']['tl_survey_page']['delete'] = ['Delete page', 'Delete page I
 
 $GLOBALS['TL_LANG']['tl_survey_page']['page'] = 'Page';
 $GLOBALS['TL_LANG']['tl_survey_page']['type'] = ['Page type', 'Please choose the type of the page.'];
-$GLOBALS['TL_LANG']['tl_survey_page']['useCustomNextButtonTitle'] = [
-    'Adjust "Next" text',
-    'Choose this option to use a custom next button text on the former page.',
-];
-$GLOBALS['TL_LANG']['tl_survey_page']['customNextButtonTitle'] = [
-    '"Next" text',
-    'Set a text for the next button on the former page.',
-];
-$GLOBALS['TL_LANG']['tl_survey_page']['hideBackButton'] = [
-    'Hide "back"',
-    'Choose this option to hide the back button on the current page.',
-];
-$GLOBALS['TL_LANG']['tl_survey_page']['markSurveyAsFinished'] = [
-    'Mark survey as finished',
-    'Choose this option to mark the survey as finished when reaching the current page.',
-];
-
+$GLOBALS['TL_LANG']['tl_survey_page']['useCustomNextButtonTitle'] = ['Adjust "Next" text','Choose this option to use a custom next button text on the former page.'];
+$GLOBALS['TL_LANG']['tl_survey_page']['customNextButtonTitle'] = ['"Next" text','Set a text for the next button on the former page.'];
+$GLOBALS['TL_LANG']['tl_survey_page']['hideBackButton'] = ['Hide "back"','Choose this option to hide the back button on the current page.'];
+$GLOBALS['TL_LANG']['tl_survey_page']['markSurveyAsFinished'] = ['Mark survey as finished','Choose this option to mark the survey as finished when reaching the current page.'];
 /*
 * Legends
 */
@@ -56,7 +43,6 @@ $GLOBALS['TL_LANG']['tl_survey_page']['intro_legend'] = 'Introduction';
 $GLOBALS['TL_LANG']['tl_survey_page']['condition_legend'] = 'Jump conditions';
 $GLOBALS['TL_LANG']['tl_survey_page']['template_legend'] = 'Template settings';
 $GLOBALS['TL_LANG']['tl_survey_page']['config_legend'] = 'Configuration';
-
 /*
  * Page types
  */
