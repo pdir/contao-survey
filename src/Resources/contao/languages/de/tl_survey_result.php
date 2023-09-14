@@ -22,6 +22,7 @@ $GLOBALS['TL_LANG']['tl_survey_result']['detailedResults'] = 'Detaillierte Ergeb
 $GLOBALS['TL_LANG']['tl_survey_result']['answers'] = 'Antworten';
 $GLOBALS['TL_LANG']['tl_survey_result']['answer'] = 'Antwort';
 $GLOBALS['TL_LANG']['tl_survey_result']['nrOfSelections'] = 'Anzahl der Auswahlen';
+
 $GLOBALS['TL_LANG']['tl_survey_result']['details']['0'] = 'Details anzeigen';
 $GLOBALS['TL_LANG']['tl_survey_result']['details']['1'] = 'Details der Frage ID %s anzeigen';
 $GLOBALS['TL_LANG']['tl_survey_result']['export'] = 'Umfrageergebnisse exportieren';
@@ -40,7 +41,6 @@ $GLOBALS['TL_LANG']['tl_survey_result']['ex_question_participant'] = 'Teilnehmer
 $GLOBALS['TL_LANG']['tl_survey_result']['ex_question_date'] = 'Datum';
 
 $GLOBALS['TL_LANG']['tl_survey_result']['categoryResults'] = 'Kategorien';
-
 $GLOBALS['TL_LANG']['tl_survey_result']['BE']['categoryResults'] = 'Kategorien';
 $GLOBALS['TL_LANG']['tl_survey_result']['BE']['category'] = 'Kategorie';
 $GLOBALS['TL_LANG']['tl_survey_result']['BE']['percent'] = 'Prozent';

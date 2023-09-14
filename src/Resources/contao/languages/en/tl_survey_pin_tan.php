@@ -68,7 +68,8 @@ $GLOBALS['TL_LANG']['tl_survey_pin_tan']['invite_hint'] = <<<'EOT'
     Only the following persons are invited,
     <ul>
     <li>who have &raquo;<strong>not yet started</strong>&laquo; their survey.
-    (People who &raquo;<strong>have started</strong>&laquo; or &raquo;<strong>already completed</strong>&laquo; their survey will not be invited).</li>
+    (People who &raquo;<strong>have started</strong>&laquo;
+     or &raquo;<strong>already completed</strong>&laquo; their survey will not be invited).</li>
     <li>who have not yet been invited</li>
     </ul>
     EOT;

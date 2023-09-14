@@ -26,7 +26,6 @@ $GLOBALS['TL_LANG']['tl_survey_scale']['description'] = ['Description', 'Please 
 $GLOBALS['TL_LANG']['tl_survey_scale']['tstamp'] = ['Last change', 'Date and time of the last change.'];
 $GLOBALS['TL_LANG']['tl_survey_scale']['language'] = ['Language', 'Please select the scale language.'];
 $GLOBALS['TL_LANG']['tl_survey_scale']['scale'] = ['Answers', 'Please select the buttons to create, copy, move, or delete answers. If you disabled JavaScript, please save your input before you change the struture of the answers!'];
-
 /*
 * Legends
 */
