@@ -14,15 +14,11 @@ declare(strict_types=1);
  * @link       https://github.com/pdir/contao-survey
  */
 
-$GLOBALS['TL_LANG']['tl_survey_participant']['show']['0'] = 'Teilnehmerdatendetails';
-$GLOBALS['TL_LANG']['tl_survey_participant']['show']['1'] = 'Details des Teilnehmers ID %s anzeigen';
-$GLOBALS['TL_LANG']['tl_survey_participant']['delete']['0'] = 'Teilnehmerdaten löschen';
-$GLOBALS['TL_LANG']['tl_survey_participant']['delete']['1'] = 'Teilnehmerdaten ID %s löschen';
-$GLOBALS['TL_LANG']['tl_survey_participant']['tstamp']['0'] = 'Änderungsdatum';
-$GLOBALS['TL_LANG']['tl_survey_participant']['tstamp']['1'] = 'Datum der letzten Änderung des Teilnehmers';
-$GLOBALS['TL_LANG']['tl_survey_participant']['lastpage']['0'] = 'Letzte Seite';
-$GLOBALS['TL_LANG']['tl_survey_participant']['lastpage']['1'] = 'Letzte Seite, die der Teilnehmer angesehen hat';
+$GLOBALS['TL_LANG']['tl_survey_participant']['show'] = ['Teilnehmerdatendetails', 'Details des Teilnehmers ID %s anzeigen'];
+$GLOBALS['TL_LANG']['tl_survey_participant']['delete'] = ['Teilnehmerdaten löschen', 'Teilnehmerdaten ID %s löschen'];
+$GLOBALS['TL_LANG']['tl_survey_participant']['tstamp'] = ['Änderungsdatum', 'Datum der letzten Änderung des Teilnehmers'];
+$GLOBALS['TL_LANG']['tl_survey_participant']['lastpage'] = ['Letzte Seite', 'Letzte Seite, die der Teilnehmer angesehen hat'];
+$GLOBALS['TL_LANG']['tl_survey_participant']['exportraw'] = ['Detaillierter Export', 'Export mit allen Teilnehmer-Antworten, filter- und sortierbar'];
+
 $GLOBALS['TL_LANG']['tl_survey_participant']['finished'] = 'beendet';
 $GLOBALS['TL_LANG']['tl_survey_participant']['running'] = 'begonnen';
-
-$GLOBALS['TL_LANG']['tl_survey_participant']['exportraw'] = ['Detaillierter Export', 'Export mit allen Teilnehmer-Antworten, filter- und sortierbar'];

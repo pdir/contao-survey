@@ -23,7 +23,6 @@ $GLOBALS['TL_LANG']['MSC']['survey_start'] = 'Start survey';
 $GLOBALS['TL_LANG']['MSC']['survey_finish'] = 'Finish survey';
 $GLOBALS['TL_LANG']['MSC']['survey_finalsubmission'] = 'Thank you for participating in this survey.';
 $GLOBALS['TL_LANG']['MSC']['cancel_survey'] = 'Exit this survey';
-
 $GLOBALS['TL_LANG']['ERR']['survey_already_finished'] = 'You already finished the survey.';
 $GLOBALS['TL_LANG']['ERR']['survey_please_enter_tan'] = 'Please enter a TAN code to start the survey.';
 $GLOBALS['TL_LANG']['ERR']['survey_wrong_tan'] = 'Invalid TAN code. Please enter a valid TAN code.';

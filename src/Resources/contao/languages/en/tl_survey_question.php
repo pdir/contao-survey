@@ -26,17 +26,8 @@ $GLOBALS['TL_LANG']['tl_survey_question']['help'] = ['Help', 'Please enter a hel
 $GLOBALS['TL_LANG']['tl_survey_question']['introduction'] = ['Introduction', 'Please enter an introduction that is shown at the beginning of a page.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['lower_bound'] = ['Lower bound', 'Please enter the lower bound of the range.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['upper_bound'] = ['Upper bound', 'Please enter the upper bound of the range.'];
-$GLOBALS['TL_LANG']['tl_survey_question']['choices']['0'] = 'Choices';
-$GLOBALS['TL_LANG']['tl_survey_question']['choices']['1'] = 'Please use the buttons to create, copy, move, or delete choices. If you disabled JavaScript, please save your input before you change the struture of the choices!';
-$GLOBALS['TL_LANG']['tl_survey_question']['choices_'] = [
-    'choice' => [
-        'Choice',
-    ],
-    'category' => [
-        'Category',
-    ],
-];
-
+$GLOBALS['TL_LANG']['tl_survey_question']['choices'] = ['Choices', 'Please use the buttons to create, copy, move, or delete choices. If you disabled JavaScript, please save your input before you change the struture of the choices!'];
+$GLOBALS['TL_LANG']['tl_survey_question']['choices_'] = ['choice' => ['Choice'],'category' => ['Category']];
 $GLOBALS['TL_LANG']['tl_survey_question']['hidetitle'] = ['Hide question title', 'Do not show the question title during survey execution.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['addother'] = ['Add other', 'Add an additional choice (other) with a text field.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['addscale'] = ['Add scale', 'Choose a scale from the list of scales and add the scale to the question.'];
@@ -47,7 +38,6 @@ $GLOBALS['TL_LANG']['tl_survey_question']['mc_style']['select'] = 'Dropdown menu
 $GLOBALS['TL_LANG']['tl_survey_question']['othertitle'] = ['Other title', 'Please enter a title for the additional choice. The text will be shown in front of the text field.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['scale'] = ['Scale', 'Please choose a scale from the list of scales.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['save_add_scale'] = 'Add scale';
-
 $GLOBALS['TL_LANG']['tl_survey_question']['openended_subtype'] = ['Subtype', 'Please choose an openended question subtype.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['openended_textbefore'] = ['Label in front', 'Please enter a label that is shown in front of the text field.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['openended_textafter'] = ['Label behind', 'Please enter a label that is shown behind the text field.'];
@@ -56,7 +46,6 @@ $GLOBALS['TL_LANG']['tl_survey_question']['openended_rows'] = ['Rows', 'Please e
 $GLOBALS['TL_LANG']['tl_survey_question']['openended_cols'] = ['Columns', 'Please enter the number of columns for the text area.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['openended_width'] = ['Width', 'Please enter the width of the text field in characters.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['openended_maxlen'] = ['Maximum length', 'Please enter the maximum length of the text field in characters.'];
-
 $GLOBALS['TL_LANG']['tl_survey_question']['multiplechoice_subtype'] = ['Subtype', 'Please choose a multiple choice question subtype.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['matrix_subtype'] = ['Subtype', 'Please choose a matrix question subtype.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['matrixrows'] = ['Rows', 'Please use the buttons to create, copy, move, or delete rows. If you disabled JavaScript, please save your input before you change the struture of the rows!'];
@@ -96,9 +85,9 @@ $GLOBALS['TL_LANG']['tl_survey_question']['matrix_singleresponse'] = 'One answer
 $GLOBALS['TL_LANG']['tl_survey_question']['matrix_multipleresponse'] = 'Multiple answers per row (multiple response)';
 $GLOBALS['TL_LANG']['tl_survey_question']['constantsum'] = 'Constant sum';
 $GLOBALS['TL_LANG']['tl_survey_question']['sum'] = ['Sum', 'Enter a sum value.'];
-$GLOBALS['TL_LANG']['tl_survey_question']['sumoption'] = ['Calculation', 'Select an option to compare the entered values with the sum value.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['sum']['exact'] = 'The sum of the entered values has to be equal to the sum value.';
 $GLOBALS['TL_LANG']['tl_survey_question']['sum']['max'] = 'The sum of the entered values must not be greater than the sum value.';
+$GLOBALS['TL_LANG']['tl_survey_question']['sumoption'] = ['Calculation', 'Select an option to compare the entered values with the sum value.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['inputfirst'] = ['Show input fields in front', 'Show input fields in front of the answer text (default is behind the answer text).'];
 
 $GLOBALS['TL_LANG']['tl_survey_question']['answered'] = 'Answered';
