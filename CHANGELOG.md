@@ -12,15 +12,22 @@ Types of changes
 
 ## [3.6.0](https://github.com/pdir/contao-survey/tree/3.6.0) – 2023-09-13
 
-- [Added] an **autostart** feature for an anonymous survey with TAN. To use this feature, the page with the corresponding survey **must be accessed using a link** of the form https://domain/my-survey-page/code/NNNNNN.html with N as the TAN.
-- [Added] some Functions that allow contao survey to be **used without notification** center. The core functions for the notification center remain in contao survey, but they will not be used until it is installed.
+- [Added] an **autostart** feature for an anonymous survey with TAN. To use this feature, the page with the corresponding
+survey **must be accessed using a link** of the form https://domain/my-survey-page/code/NNNNNN.html with N as the TAN.
+- [Added] some Functions that allow contao survey to be **used without notification** center. The core functions for the
+notification center remain in contao survey, but they will not be used until it is installed.
 - [Changed] Logic for limiting surveys to user groups
 - [Changed] Added rules to lock and unlock certain features for surveys and TANs
-- [Changed] Processing of survey types was extended. Now also personalized surveys with a TAN are possible, to which the participants can be invited and reminded if the Notifications Center is installed, implements: [#45](https://github.com/pdir/contao-survey/issues/45) 🤗 [AI ANTWORT:INTERNET GmbH](https://www.antwortinternet.com/)
+- [Changed] Processing of survey types was extended. Now also personalized surveys with a TAN are possible, to which the
+participants can be invited and reminded if the Notifications Center is installed, implements: [#45](https://github.com/pdir/contao-survey/issues/45) 🤗 [AI ANTWORT:INTERNET GmbH](https://www.antwortinternet.com/)
 - [Added] font awesome svg icons
 - [Added] new field **survey duration** to show the estimated duration of a survey
-- [Added] Possibility of using invitation and reminder e-mails together with some new tokens for the Notification Center, implements: [#46](https://github.com/pdir/contao-survey/issues/46) 🤗 [AI ANTWORT:INTERNET GmbH](https://www.antwortinternet.com/)
+- [Added] Possibility of using invitation and reminder e-mails together with some new tokens for the Notification Center,
+implements: [#46](https://github.com/pdir/contao-survey/issues/46) 🤗 [AI ANTWORT:INTERNET GmbH](https://www.antwortinternet.com/)
 - [Added] Support for [Notification Center](https://github.com/terminal42/contao-notification_center), implements: [#46](https://github.com/pdir/contao-survey/issues/46)
+- [Fixed] some PHP8 warnings and issues 🤗 [Wusch](https://github.com/Wusch)
+- [Fixed] TAN export [#43](https://github.com/pdir/contao-survey/issues/43)
+- [Fixed] remove MySqlPlatform usage [#40](https://github.com/pdir/contao-survey/issues/40)
 
 ## [3.5.1](https://github.com/pdir/contao-survey/tree/3.5.1) – 2023-08-20
 
