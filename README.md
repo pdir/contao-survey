@@ -25,7 +25,13 @@ Exports will be in csv format. If the bundle [hschottm/contao-xls-export](https:
 
 A special thanks goes to Georg Rehfeld for his development of the detailed survey export and the enhancements of the survey tool.
 
-# Features from 3.6.0
+## Installation and Usage
+
+* Install the package.
+* There is a new "Survey" menu item
+* Add the new "Survey" content element directly to your pages.
+
+## Features from 3.6.0
 Notification Center support was added with version 3.6.0. Also, some new Notification Center tokens and new fields have been added.
 #### The following NC tokens have been added:
 - ##survey_title##
