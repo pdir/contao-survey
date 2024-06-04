@@ -50,7 +50,7 @@ class ContentSurvey extends ContentElement
     protected $pin;
     private $questionpositions;
 
-    /** 
+    /**
      * @var Request|null
      */
     private $request;
@@ -931,7 +931,7 @@ class ContentSurvey extends ContentElement
                     $status = $this->svy->getSurveyStatus($this->objSurvey->id, $_COOKIE['TLsvy_'.$this->objSurvey->id] ?? null);
                 }
 
-                if (\is_string($status) && (0 === strcmp($status, 'finished'))) {
+                if (\is_string($status) && (0 === \strcmp($status, 'finished'))) {
                     $this->Template->errorMsg = $GLOBALS['TL_LANG']['ERR']['survey_already_finished'];
                     $this->Template->hideStartButtons = true;
                 }
@@ -961,7 +961,7 @@ class ContentSurvey extends ContentElement
                 } else {
                     $status = $this->svy->getSurveyStatusForMember($this->objSurvey->id, $this->User->id);
 
-                    if (0 === strcmp($status, 'finished')) {
+                    if (\is_string($status) && 0 === \strcmp($status, 'finished')) {
                         $this->Template->errorMsg = $GLOBALS['TL_LANG']['ERR']['survey_already_finished'];
                         $this->Template->hideStartButtons = true;
                     }
