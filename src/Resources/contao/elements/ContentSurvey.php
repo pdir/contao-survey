@@ -18,7 +18,6 @@ namespace Hschottm\SurveyBundle;
 
 use Contao\BackendTemplate;
 use Contao\ContentElement;
-use Contao\Controller;
 use Contao\Database\Result;
 use Contao\Email;
 use Contao\Environment;
@@ -29,8 +28,10 @@ use Contao\Input;
 use Contao\Model\Collection;
 use Contao\PageModel;
 use Contao\StringUtil;
+use Contao\System;
 use Contao\Validator;
 use Hschottm\SurveyBundle\DataContainer\SurveyPageContainer;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @property SurveyModel|Result $objSurvey
@@ -49,6 +50,11 @@ class ContentSurvey extends ContentElement
     protected $pin;
     private $questionpositions;
 
+    /** 
+     * @var Request|null
+     */
+    private $request;
+
     /**
      * Display a wildcard in the back end.
      *
@@ -64,6 +70,7 @@ class ContentSurvey extends ContentElement
         }
 
         $this->strTemplate = !empty($this->surveyTpl) ? $this->surveyTpl : $this->strTemplate;
+        $this->request = System::getContainer()->get('request_stack')->getCurrentRequest();
 
         return parent::generate();
     }
@@ -306,8 +313,7 @@ class ContentSurvey extends ContentElement
         $this->Template->show_cancel = $page > 0 && \count($surveypage) ? $this->objSurvey->show_cancel : false;
         $this->Template->surveytitle = StringUtil::specialchars($this->objSurvey->title);
         $this->Template->cancel = StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['cancel_survey']);
-        global $objPage;
-        $this->Template->cancellink = $this->generateFrontendUrl($objPage->row());
+        $this->Template->cancellink = $this->request ? $this->request->getPathInfo() : '/';
 
         $this->Template->page = $page;
         $this->Template->introduction = $this->objSurvey->introduction;
@@ -496,16 +502,14 @@ class ContentSurvey extends ContentElement
                 $this->pin = $_COOKIE['TLsvy_'.$this->objSurvey->id];
             } else {
                 // PIN got lost, restart
-                global $objPage;
-                $this->redirect($this->generateFrontendUrl($objPage->row()));
+                $this->redirect($this->request->getPathInfo());
             }
         }
 
         // save survey values
         if ($validate && 'tl_survey' === Input::post('FORM_SUBMIT') && (!$doNotSubmit || $goback)) {
             if (empty($this->pin) || !$this->isValid($this->pin)) {
-                global $objPage;
-                $this->redirect($this->generateFrontendUrl($objPage->row()));
+                $this->redirect($this->request->getPathInfo());
             }
 
             foreach ($surveypage as $question) {
