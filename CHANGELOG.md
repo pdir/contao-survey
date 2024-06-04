@@ -28,6 +28,8 @@ implements: [#46](https://github.com/pdir/contao-survey/issues/46) 🤗 [AI ANTW
 - [Fixed] some PHP8 warnings and issues 🤗 [Wusch](https://github.com/Wusch)
 - [Fixed] TAN export [#43](https://github.com/pdir/contao-survey/issues/43)
 - [Fixed] remove MySqlPlatform usage [#40](https://github.com/pdir/contao-survey/issues/40)
+- [Fixed] Fix immediate_start check [PR](https://github.com/pdir/contao-survey/pull/69) 🤗 [fritzmg](https://github.com/fritzmg)
+- [Fixed] Do not use generateFrontendUrl [PR](https://github.com/pdir/contao-survey/pull/67) 🤗 [fritzmg](https://github.com/fritzmg)
 
 ## [3.5.1](https://github.com/pdir/contao-survey/tree/3.5.1) – 2023-08-20
 
