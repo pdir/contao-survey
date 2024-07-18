@@ -102,7 +102,7 @@ class SurveyQuestionConstantsum extends SurveyQuestion
         $col = 2;
 
         if (\is_array($this->statistics['cumulated'])) {
-            $arrChoices = deserialize($this->arrData['sumchoices'], true);
+            $arrChoices = StringUtil::deserialize($this->arrData['sumchoices'], true);
             $counter = 1;
 
             foreach ($arrChoices as $choice) {
@@ -171,7 +171,7 @@ class SurveyQuestionConstantsum extends SurveyQuestion
 
     public function resultAsString($res)
     {
-        $arrAnswer = deserialize($res, true);
+        $arrAnswer = StringUtil::deserialize($res, true);
 
         if (\is_array($arrAnswer)) {
             return implode(', ', $arrAnswer);
@@ -201,7 +201,7 @@ class SurveyQuestionConstantsum extends SurveyQuestion
         $cumulated['other'] = [];
 
         foreach ($this->arrStatistics['answers'] as $answer) {
-            $arrAnswer = deserialize($answer, true);
+            $arrAnswer = StringUtil::deserialize($answer, true);
 
             if (\is_array($arrAnswer)) {
                 foreach ($arrAnswer as $answerkey => $answervalue) {
@@ -242,7 +242,7 @@ class SurveyQuestionConstantsum extends SurveyQuestion
      */
     protected function exportQuestionHeadersToExcel(&$exporter, $sheet, &$row, &$col, $questionNumbers, &$rotateInfo)
     {
-        $this->choices = deserialize($this->arrData['sumchoices'], true);
+        $this->choices = StringUtil::deserialize($this->arrData['sumchoices'], true);
 
         foreach ($this->choices as $k => $v) {
             $this->choices[$k] = StringUtil::decodeEntities($v);
@@ -404,7 +404,7 @@ class SurveyQuestionConstantsum extends SurveyQuestion
 
             if ($data) {
                 $col = $startCol;
-                $arrAnswers = deserialize($data, true);
+                $arrAnswers = StringUtil::deserialize($data, true);
 
                 foreach ($this->choices as $k => $choice) {
                     $strAnswer = '';

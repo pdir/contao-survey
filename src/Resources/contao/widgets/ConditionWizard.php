@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Hschottm\SurveyBundle;
 
 use Contao\BackendTemplate;
+use Contao\StringUtil;
 use Contao\Widget;
 
 /**
@@ -58,7 +59,7 @@ class ConditionWizard extends Widget
                 break;
 
             case 'value':
-                $this->varValue = deserialize($varValue);
+                $this->varValue = StringUtil::deserialize($varValue);
                 break;
 
             case 'mandatory':

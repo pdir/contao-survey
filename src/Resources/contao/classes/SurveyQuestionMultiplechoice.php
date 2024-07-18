@@ -539,7 +539,7 @@ class SurveyQuestionMultiplechoice extends SurveyQuestion
 
             if ($data) {
                 $col = $startCol;
-                $arrAnswers = deserialize($data, true);
+                $arrAnswers = StringUtil::deserialize($data, true);
 
                 if ('mc_dichotomous' === $this->arrData['multiplechoice_subtype']) {
                     $exporter->setCellValue($sheet, $row, $col, [
@@ -592,14 +592,14 @@ class SurveyQuestionMultiplechoice extends SurveyQuestion
 
     /*public function resultAsString($res)
           {
-              $arrAnswer = deserialize($res, true);
+              $arrAnswer = StringUtil::deserialize($res, true);
               if (is_array($arrAnswer['value']))
               {
                   return implode (", ", $arrAnswer['value']);
               }
               else
               {
-                  $arrChoices = (strcmp($this->arrData['multiplechoice_subtype'], 'mc_dichotomous') != 0) ? deserialize($this->arrData['choices'], true) : array(0 => $GLOBALS['TL_LANG']['tl_survey_question']['yes'], 1 => $GLOBALS['TL_LANG']['tl_survey_question']['no']);
+                  $arrChoices = (strcmp($this->arrData['multiplechoice_subtype'], 'mc_dichotomous') != 0) ? StringUtil::deserialize($this->arrData['choices'], true) : array(0 => $GLOBALS['TL_LANG']['tl_survey_question']['yes'], 1 => $GLOBALS['TL_LANG']['tl_survey_question']['no']);
                   return $arrChoices[$arrAnswer['value']-1];
               }
               if (strlen($arrAnswer['other']))

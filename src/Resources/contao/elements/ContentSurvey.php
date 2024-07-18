@@ -89,7 +89,7 @@ class ContentSurvey extends ContentElement
 
         // add survey javascript
         if (\is_array($GLOBALS['TL_JAVASCRIPT'])) {
-            array_insert($GLOBALS['TL_JAVASCRIPT'], 1, 'bundles/hschottmsurvey/js/survey.js');
+            \array_insert($GLOBALS['TL_JAVASCRIPT'], 1, 'bundles/hschottmsurvey/js/survey.js');
         } else {
             $GLOBALS['TL_JAVASCRIPT'] = ['bundles/hschottmsurvey/js/survey.js'];
         }
@@ -146,7 +146,7 @@ class ContentSurvey extends ContentElement
                         $pintan = $this->svy->generatePIN_TAN();
 
                         if ($this->objSurvey->usecookie) {
-                            setcookie('TLsvy_'.$this->objSurvey->id, $pintan['PIN'], time() + 3600 * 24 * 365, '/');
+                            \setcookie('TLsvy_'.$this->objSurvey->id, $pintan['PIN'], time() + 3600 * 24 * 365, '/');
                         }
                         $this->pin = $pintan['PIN'];
                         $this->insertPinTan($this->objSurvey->id, $pintan['PIN'], $pintan['TAN'], 1);
@@ -158,7 +158,7 @@ class ContentSurvey extends ContentElement
                 case 'anoncode':
                     $tan = Input::post('tan');
 
-                    if (0 === strcmp(Input::post('FORM_SUBMIT'), 'tl_survey_form') && (!empty($tan))) {
+                    if (0 === \strcmp(Input::post('FORM_SUBMIT'), 'tl_survey_form') && (!empty($tan))) {
                         $result = $this->svy->checkPINTAN($this->objSurvey->id, '', $tan);
 
                         if (false === $result) {
@@ -166,7 +166,7 @@ class ContentSurvey extends ContentElement
                         } else {
                             $this->pin = $this->svy->getPINforTAN($this->objSurvey->id, $tan);
 
-                            if ('0' === $result) {
+                            if (0 == $result) {
                                 $res = SurveyPinTanModel::findOneBy(['tan=?', 'pid=?'], [$tan, $this->objSurvey->id]);
 
                                 if (null !== $res) {
@@ -175,7 +175,7 @@ class ContentSurvey extends ContentElement
                                 }
                                 // set pin
                                 if ($this->objSurvey->usecookie) {
-                                    setcookie('TLsvy_'.$this->objSurvey->id, $this->pin, time() + 3600 * 24 * 365, '/');
+                                    \setcookie('TLsvy_'.$this->objSurvey->id, $this->pin, \time() + 3600 * 24 * 365, '/');
                                 }
                                 $this->insertParticipant($this->objSurvey->id, $this->pin);
                                 $page = 1;
@@ -327,12 +327,12 @@ class ContentSurvey extends ContentElement
         $this->Template->pin = $this->pin;
 
         // fix for /survey/code/xyz.html urls
-        if (isset($tan) && str_contains($formaction, '/code/')) {
-            $url = parse_url($formaction);
-            $formaction = str_replace('/code/'.$tan, '', $url['path']);
+        if (isset($tan) && \str_contains($formaction, '/code/')) {
+            $url = \parse_url($formaction);
+            $formaction = \str_replace('/code/'.$tan, '', $url['path']);
         }
 
-        $this->Template->action = ampersand($formaction);
+        $this->Template->action = \ampersand($formaction);
     }
 
     protected function evaluateConditions($page)
@@ -387,7 +387,7 @@ class ContentSurvey extends ContentElement
             }
 
             if ($applies) {
-                $condition = array_shift($group);
+                $condition = \array_shift($group);
 
                 return $condition['pageid'];
             }
@@ -403,7 +403,7 @@ class ContentSurvey extends ContentElement
         ;
 
         if ($objResult->numRows) {
-            return deserialize($objResult->result);
+            return \deserialize($objResult->result);
         }
 
         return null;
@@ -450,7 +450,7 @@ class ContentSurvey extends ContentElement
             $objWidget->pageQuestionNumber = $pagequestioncounter;
             $objWidget->pageNumber = $pagenumber;
             $objWidget->cssClass = ('' !== $question['cssClass'] ? ' '.$question['cssClass'] : '').(0 === $objWidget->absoluteNumber % 2 ? ' odd' : ' even');
-            array_push($surveypage, $objWidget);
+            \array_push($surveypage, $objWidget);
             ++$pagequestioncounter;
 
             if ($validate) {
@@ -533,7 +533,7 @@ class ContentSurvey extends ContentElement
                         $value = $question->value;
 
                         if (\is_array($question->value)) {
-                            $value = serialize($question->value);
+                            $value = \serialize($question->value);
                         }
 
                         if (!empty($value)) {
@@ -620,16 +620,16 @@ class ContentSurvey extends ContentElement
 
                         if (null !== $res) {
                             if (!empty($res->result)) {
-                                $arrRecipient = trimsplit(',', $res->result);
+                                $arrRecipient = \trimsplit(',', $res->result);
                             }
                         }
                     }
 
                     if (!empty($this->objSurvey->confirmationMailRecipient)) {
                         $varRecipient = $this->objSurvey->confirmationMailRecipient;
-                        $arrRecipient = array_merge($arrRecipient, trimsplit(',', $varRecipient));
+                        $arrRecipient = \array_merge($arrRecipient, \trimsplit(',', $varRecipient));
                     }
-                    $arrRecipient = array_filter(array_unique($arrRecipient));
+                    $arrRecipient = \array_filter(array_unique($arrRecipient));
 
                     if (!empty($arrRecipient)) {
                         foreach ($arrRecipient as $kR => $recipient) {
@@ -641,7 +641,7 @@ class ContentSurvey extends ContentElement
                     // Check if we want custom attachments... (Thanks to Torben Schwellnus)
                     if ($this->objSurvey->addConfirmationMailAttachments) {
                         if ($this->objSurvey->confirmationMailAttachments) {
-                            $arrCustomAttachments = deserialize($this->objSurvey->confirmationMailAttachments, true);
+                            $arrCustomAttachments = StringUtil::deserialize($this->objSurvey->confirmationMailAttachments, true);
 
                             if (!empty($arrCustomAttachments)) {
                                 foreach ($arrCustomAttachments as $varFile) {
@@ -779,7 +779,7 @@ class ContentSurvey extends ContentElement
                         // Check if we want custom attachments... (Thanks to Torben Schwellnus)
                         if ($this->objSurvey->addConfirmationMailAlternateAttachments) {
                             if ($this->objSurvey->confirmationMailAlternateAttachments) {
-                                $arrCustomAttachments = deserialize($this->objSurvey->confirmationMailAlternateAttachments, true);
+                                $arrCustomAttachments = StringUtil::deserialize($this->objSurvey->confirmationMailAlternateAttachments, true);
 
                                 if (!empty($arrCustomAttachments)) {
                                     foreach ($arrCustomAttachments as $varFile) {

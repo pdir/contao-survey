@@ -63,7 +63,7 @@ class Survey extends Backend
      *
      * @return string
      */
-    public function checkPINTAN($id, $pin = '', $tan = '')
+    public function checkPINTAN($id, $pin = '', $tan = ''): bool|string
     {
         if (\strlen($pin)) {
             $pinTanModel = SurveyPinTanModel::findOneBy(['pid=?', 'pin=?'], [$id, $pin]);

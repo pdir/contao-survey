@@ -106,8 +106,8 @@ class SurveyQuestionMatrix extends SurveyQuestion
         $col = 2;
 
         if (\is_array($this->statistics['cumulated'])) {
-            $arrRows = deserialize($this->arrData['matrixrows'], true);
-            $arrChoices = deserialize($this->arrData['matrixcolumns'], true);
+            $arrRows = StringUtil::deserialize($this->arrData['matrixrows'], true);
+            $arrChoices = StringUtil::deserialize($this->arrData['matrixcolumns'], true);
             $row_counter = 1;
 
             foreach ($arrRows as $id => $rowdata) {
@@ -190,7 +190,7 @@ class SurveyQuestionMatrix extends SurveyQuestion
 
     public function resultAsString($res)
     {
-        $arrAnswer = deserialize($res, true);
+        $arrAnswer = StringUtil::deserialize($res, true);
 
         if (\is_array($arrAnswer)) {
             // ToDo: fix the following workaround
@@ -221,7 +221,7 @@ class SurveyQuestionMatrix extends SurveyQuestion
         $cumulated['other'] = [];
 
         foreach ($this->arrStatistics['answers'] as $answer) {
-            $arrAnswer = deserialize($answer, true);
+            $arrAnswer = StringUtil::deserialize($answer, true);
 
             if (\is_array($arrAnswer)) {
                 foreach ($arrAnswer as $row => $answervalue) {
@@ -256,14 +256,14 @@ class SurveyQuestionMatrix extends SurveyQuestion
      */
     protected function exportQuestionHeadersToExcel(&$exporter, $sheet, &$row, &$col, $questionNumbers, &$rotateInfo)
     {
-        $this->subquestions = deserialize($this->arrData['matrixrows'], true);
+        $this->subquestions = StringUtil::deserialize($this->arrData['matrixrows'], true);
 
         foreach ($this->subquestions as $k => $v) {
             $this->subquestions[$k] = StringUtil::decodeEntities($v);
         }
         $numcols = \count($this->subquestions);
 
-        $this->choices = deserialize($this->arrData['matrixcolumns'], true);
+        $this->choices = StringUtil::deserialize($this->arrData['matrixcolumns'], true);
 
         if ($this->arrData['addneutralcolumn']) {
             // TODO: i believe, the dash is better then the real text for the neutral column, make configurable?
@@ -437,7 +437,7 @@ class SurveyQuestionMatrix extends SurveyQuestion
 
             if ($data) {
                 $col = $startCol;
-                $arrAnswers = deserialize($data, true);
+                $arrAnswers = StringUtil::deserialize($data, true);
 
                 if ('matrix_singleresponse' === $this->arrData['matrix_subtype']) {
                     $emptyAnswer = false;
