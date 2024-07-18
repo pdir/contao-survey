@@ -159,7 +159,7 @@ class tl_survey_scale extends Backend
     {
         $result = '<p><strong>'.$row['title'].'</strong></p>';
         $result .= '<ol>';
-        $answers = deserialize($row['scale'], true);
+        $answers = StringUtil::deserialize($row['scale'], true);
 
         foreach ($answers as $answer) {
             $result .= '<li>'.StringUtil::specialchars($answer).'</li>';

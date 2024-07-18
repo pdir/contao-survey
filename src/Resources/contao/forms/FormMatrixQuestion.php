@@ -58,12 +58,12 @@ class FormMatrixQuestion extends FormQuestionWidget
             case 'surveydata':
                 parent::__set($strKey, $varValue);
                 $this->strClass = 'matrix'.((\strlen($varValue['cssClass']) ? ' '.$varValue['cssClass'] : ''));
-                $this->arrRows = deserialize($varValue['matrixrows']);
+                $this->arrRows = StringUtil::deserialize($varValue['matrixrows']);
 
                 if (!\is_array($this->arrRows)) {
                     $this->arrRows = [];
                 }
-                $this->arrColumns = deserialize($varValue['matrixcolumns']);
+                $this->arrColumns = StringUtil::deserialize($varValue['matrixcolumns']);
 
                 if (!\is_array($this->arrColumns)) {
                     $this->arrColumns = [];

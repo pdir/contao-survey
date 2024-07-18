@@ -57,7 +57,7 @@ class FormConstantSumQuestion extends FormQuestionWidget
                 $this->strSumOption = $varValue['sumoption'];
                 $this->dblSum = (float)$varValue['sum'];
                 $this->blnInputFirst = $varValue['inputfirst'] ? true : false;
-                $this->arrChoices = deserialize($varValue['sumchoices']);
+                $this->arrChoices = StringUtil::deserialize($varValue['sumchoices']);
 
                 if (!\is_array($this->arrChoices)) {
                     $this->arrChoices = [];

@@ -623,7 +623,7 @@ class tl_survey_question extends Backend
         $arrScales = [];
 
         while ($objScales->next()) {
-            $arrScales[$objScales->id] = ['title' => $objScales->title, 'scales' => deserialize($objScales->scale, true), 'folder' => $objScales->folder];
+            $arrScales[$objScales->id] = ['title' => $objScales->title, 'scales' => StringUtil::deserialize($objScales->scale, true), 'folder' => $objScales->folder];
         }
 
         // Add scale

@@ -10,6 +10,12 @@ Types of changes
     Security in case of vulnerabilities.
 )
 
+
+## [3.6.1](https://github.com/pdir/contao-survey/tree/3.6.1) – 2024-07-18
+
+- [Fixed] Error when starting TAN surveys fixed
+- [Changed] Increase PHP version to minimum 8.0
+
 ## [3.6.0](https://github.com/pdir/contao-survey/tree/3.6.0) – 2024-07-04
 
 - [Added] an **autostart** feature for an anonymous survey with TAN. To use this feature, the page with the corresponding
