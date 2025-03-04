@@ -1,19 +1,17 @@
-includes:
-    - vendor/phpstan/phpstan-phpunit/extension.neon
-    - vendor/phpstan/phpstan-phpunit/rules.neon
-    - vendor/phpstan/phpstan-symfony/extension.neon
-    - vendor/phpstan/phpstan-symfony/rules.neon
-
 parameters:
-    level: 6
+    level: max
+
+    bootstrapFiles:
+        - %rootDir%/../../../vendor/autoload.php
 
     paths:
-        - %currentWorkingDirectory%/src
-        - %currentWorkingDirectory%/tests
+        - src
+        - tests
 
-    universalObjectCratesClasses:
-        - Contao\BackendModule
-        - Contao\ContentElement
-        - Contao\Model
-        - Contao\Module
-        - Contao\Template
+    excludePaths:
+        - vendor
+
+    reportUnmatchedIgnoredErrors: false
+
+    ignoreErrors:
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.#'
