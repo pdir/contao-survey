@@ -14,6 +14,8 @@ declare(strict_types=1);
  * @link       https://github.com/pdir/contao-survey
  */
 
+use Contao\System;
+
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['createtan'] = ['TAN-Codes erzeugen', 'TAN-Codes erzeugen'];
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['exporttan'] = 'TAN-Codes exportieren';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['tans'] = 'TAN-Codes';

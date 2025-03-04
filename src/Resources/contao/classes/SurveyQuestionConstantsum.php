@@ -350,8 +350,6 @@ class SurveyQuestionConstantsum extends SurveyQuestion
         } else {
             // output all choice columns
             $rotateInfo[$row] = [];
-            // $narrowWidth = 2 * 640;  // ToDo: remove later
-            // $sumWidth = 0;
 
             foreach ($this->choices as $choice) {
                 $data = [

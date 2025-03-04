@@ -485,8 +485,6 @@ class SurveyQuestionMultiplechoice extends SurveyQuestion
         } else {
             // output all choice columns
             $rotateInfo[$row] = [];
-            $narrowWidth = 2 * 640;
-            $sumWidth = 0;
 
             foreach ($this->choices as $key => $choice) {
                 $data = [
@@ -526,7 +524,7 @@ class SurveyQuestionMultiplechoice extends SurveyQuestion
         $cells = [];
         $startCol = $col;
 
-        foreach ($participants as $key => $value) {
+        foreach (array_keys($participants) as $key) {
             $data = false;
 
             if (isset($this->statistics['participants']) && !empty($this->statistics['participants'][$key]['result'])) {
@@ -566,7 +564,7 @@ class SurveyQuestionMultiplechoice extends SurveyQuestion
                         Exporter::TEXTWRAP => true,
                     ]);
                 } elseif ('mc_multipleresponse' === $this->arrData['multiplechoice_subtype']) {
-                    foreach ($this->choices as $k => $v) {
+                    foreach (array_keys($this->choices) as $k) {
                         $strAnswer = \is_array($arrAnswers['value']) && \array_key_exists($k + 1, $arrAnswers['value'])
                             ? $this->arrData['addother'] && ($k + 1 === \count($this->choices))
                                 ? StringUtil::decodeEntities($arrAnswers['other'])

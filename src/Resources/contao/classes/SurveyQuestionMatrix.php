@@ -382,8 +382,6 @@ class SurveyQuestionMatrix extends SurveyQuestion
         } else {
             // output all subquestion columns
             $rotateInfo[$row] = [];
-            $narrowWidth = 2 * 640;
-            $sumWidth = 0;
 
             foreach ($this->subquestions as $key => $subquestion) {
                 $data = [
@@ -442,7 +440,7 @@ class SurveyQuestionMatrix extends SurveyQuestion
                 if ('matrix_singleresponse' === $this->arrData['matrix_subtype']) {
                     $emptyAnswer = false;
 
-                    foreach ($this->subquestions as $k => $junk) {
+                    foreach (array_keys($this->subquestions) as $k) {
                         $strAnswer = '';
 
                         if (\array_key_exists($k + 1, $arrAnswers)) {
@@ -458,7 +456,7 @@ class SurveyQuestionMatrix extends SurveyQuestion
                         }
                     }
 
-                    foreach ($this->subquestions as $k => $junk) {
+                    foreach (array_keys($this->subquestions) as $k) {
                         $strAnswer = '';
 
                         if (\array_key_exists($k + 1, $arrAnswers)) {
@@ -507,13 +505,13 @@ class SurveyQuestionMatrix extends SurveyQuestion
                         }
                     }
 
-                    foreach ($this->subquestions as $k => $junk) {
+                    foreach (array_keys($this->subquestions) as $k) {
                         $strAnswer = '';
 
                         if (\is_array($arrAnswers[$k + 1])) {
                             $arrTmp = [];
 
-                            foreach ($arrAnswers[$k + 1] as $kk => $v) {
+                            foreach (array_keys($arrAnswers[$k + 1]) as $kk) {
                                 $arrTmp[] = $this->choices[$kk - 1];
                             }
                             // TODO: make delimiter configurable/intelligent, though '|' is a good default, breaks in Calc

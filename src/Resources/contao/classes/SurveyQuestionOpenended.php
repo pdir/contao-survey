@@ -223,7 +223,7 @@ class SurveyQuestionOpenended extends SurveyQuestion
     {
         $cells = [];
 
-        foreach ($participants as $key => $value) {
+        foreach (array_keys($participants) as $key) {
             $data = false;
 
             if (isset($this->statistics['participants']) && !empty($this->statistics['participants'][$key]['result'])) {
