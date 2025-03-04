@@ -10,3 +10,5 @@ composer.lock
 vendor
 # Transifex
 /.tx/
+/report.xml
+/.phpunit.result.cache
