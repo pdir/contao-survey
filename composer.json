@@ -37,14 +37,11 @@
     "bamarni/composer-bin-plugin": "^1.5",
     "contao/manager-plugin": "^2.0",
     "contao/easy-coding-standard": "^3.0",
-    "phpunit/phpunit": "^7.1 || ^8.4 || ^9.5",
-    "symfony/phpunit-bridge": "^4.4 || ^5.1",
-    "phpstan/phpstan": "^1.10",
-    "phpstan/phpstan-phpunit": "^1.1",
-    "phpstan/phpstan-symfony": "^1.2",
-    "terminal42/notification_center": "1.6.0"
+    "phpunit/phpunit": "^8.5 || ^9.5",
+    "symfony/phpunit-bridge": "^5.3 || ^6.0"
   },
   "conflict": {
+    "contao/core": "*",
     "contao/manager-plugin": "<2.0 || >=3.0"
   },
   "autoload": {
@@ -78,5 +75,13 @@
       "bamarni/composer-bin-plugin": true,
       "php-http/discovery": true
     }
+  },
+  "scripts": {
+    "all": [
+      "@cs-fixer",
+      "@phpunit"
+    ],
+    "cs-fixer": "vendor/bin/ecs check src/ tests/ --fix",
+    "phpunit": "vendor/bin/phpunit --configuration phpunit.xml --coverage-text --log-junit report.xml"
   }
 }

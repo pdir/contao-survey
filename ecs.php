@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symplify\EasyCodingStandard\ValueObject\Option;
@@ -18,7 +20,7 @@ forked by pdir
 @link       https://github.com/pdir/contao-survey
 EOF;
 
-return static function (ContainerConfigurator $containerConfigurator) {
+return static function (ContainerConfigurator $containerConfigurator): void {
     $containerConfigurator->import(__DIR__.'/vendor/contao/easy-coding-standard/config/set/contao.php');
 
     $parameters = $containerConfigurator->parameters();
