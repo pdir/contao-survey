@@ -30,7 +30,7 @@ $GLOBALS['TL_LANG']['tl_survey_pin_tan']['reminded'] = 'Member reminded with';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['reminder'] = '. reminder ';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['not_yet'] = 'not yet';
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['nrOfTAN'] = ['Number of TAN codes', 'Please enter the number of the TAN codes you want to create.'];
-$GLOBALS['TL_LANG']['tl_survey_pin_tan']['memberGroupId'] = ['for members of the group', 'Select here a member group or &raquo;all members&laquo; for all members.', 'no group (all active members)',];
+$GLOBALS['TL_LANG']['tl_survey_pin_tan']['memberGroupId'] = ['for members of the group', 'Select here a member group or &raquo;all members&laquo; for all members.', 'no group (all active members)'];
 // only for the xls exporter
 $GLOBALS['TL_LANG']['tl_survey_pin_tan']['member_id'] = ['Member', ''];
 

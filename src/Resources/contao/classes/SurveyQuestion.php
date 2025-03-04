@@ -160,7 +160,7 @@ abstract class SurveyQuestion extends Backend
         $this->arrStatistics = [];
     }
 
-    public function exportDataToExcel(&$exporter, $sheet, &$row)
+    public function exportDataToExcel(& $exporter, $sheet, & $row)
     {
         // overwrite in parent classes
         return [];
@@ -173,7 +173,7 @@ abstract class SurveyQuestion extends Backend
 
     abstract protected function calculateStatistics();
 
-    protected function calculateAnsweredSkipped(&$objResult): void
+    protected function calculateAnsweredSkipped(& $objResult): void
     {
         $this->arrStatistics = [];
         $this->arrStatistics['answered'] = 0;

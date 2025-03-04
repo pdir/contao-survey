@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Contao\DC_Table;
-
 /*
  * @copyright  Helmut Schottmüller 2005-2018 <http://github.com/hschottm>
  * @author     Helmut Schottmüller (hschottm)
@@ -15,6 +13,8 @@ use Contao\DC_Table;
  * @author     Mathias Arzberger <develop@pdir.de>
  * @link       https://github.com/pdir/contao-survey
  */
+
+use Contao\DC_Table;
 
 $GLOBALS['TL_DCA']['tl_survey_pin_tan'] = [
     // Config

@@ -54,7 +54,7 @@ $GLOBALS['TL_LANG']['tl_survey']['limit_groups'] = ['Limit members', 'Limit the 
 $GLOBALS['TL_LANG']['tl_survey']['allowed_groups'] = ['Member groups', 'Choose the member groups that should be able to participate in the survey.'];
 
 $GLOBALS['TL_LANG']['tl_survey']['useNotifications'] = ['Use Notification Center', 'If you want to use the functions of the Notification Center, you must first define suitable notifications.'];
-$GLOBALS['TL_LANG']['tl_survey']['useNotificationsNotInstalled'] = ["Use Notification Center (not installed)", "<span style='color:red;'>You cannot use this feature because the Notification Center is not currently installed. Please contact your administrator to enable this feature.</span>"];
+$GLOBALS['TL_LANG']['tl_survey']['useNotificationsNotInstalled'] = ['Use Notification Center (not installed)', "<span style='color:red;'>You cannot use this feature because the Notification Center is not currently installed. Please contact your administrator to enable this feature.</span>"];
 
 $GLOBALS['TL_LANG']['tl_survey']['invitationNotificationId'] = ['Use this message as an invitation.', 'Select the message for the invitation here.'];
 $GLOBALS['TL_LANG']['tl_survey']['reminderNotificationId'] = ['Use this message as an reminder.', 'Select the message for the reminder here.'];
@@ -101,8 +101,8 @@ $GLOBALS['TL_LANG']['tl_survey']['misc_legend'] = 'General settings';
 $GLOBALS['TL_LANG']['tl_survey']['allowback'] = ['Show "Previous" button', 'Shows a "Previous" button in the survey navigation to go back to the previous page.'];
 $GLOBALS['TL_LANG']['tl_survey']['immediate_start'] = ['Start survey immediately', 'Check this option if you want to show the form immediately.'];
 $GLOBALS['TL_LANG']['tl_survey']['jumpto'] = ['Redirect to page', 'Select a page to redirect the survey after it was finished.'];
-$GLOBALS['TL_LANG']['tl_survey']['useResultCategories'] = ['Use answer cateories', 'Activate this option to enable categories for (multiple choice) answers.',];
-$GLOBALS['TL_LANG']['tl_survey']['resultCategories'] = ['Answer categories','Create answer categories',];
+$GLOBALS['TL_LANG']['tl_survey']['useResultCategories'] = ['Use answer cateories', 'Activate this option to enable categories for (multiple choice) answers.'];
+$GLOBALS['TL_LANG']['tl_survey']['resultCategories'] = ['Answer categories', 'Create answer categories'];
 $GLOBALS['TL_LANG']['tl_survey']['resultCategories_'] = [
     'id' => ['ID', 'The internal id for the categorie. Read only.'],
     'category' => ['Title', 'The category title.'],

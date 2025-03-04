@@ -38,7 +38,8 @@ class MemberGroupModel extends ContaoMemberGroupModel
         if ($members) {
             $groupMembers = array_filter($members->getModels(), function ($member) {
                 $arrGroups = StringUtil::deserialize($member->groups);
-                if (\in_array((string)$this->id, $arrGroups, true)) {
+
+                if (\in_array((string) $this->id, $arrGroups, true)) {
                     return $member;
                 }
             });

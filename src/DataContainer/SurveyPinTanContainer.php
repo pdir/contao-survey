@@ -84,49 +84,34 @@ class SurveyPinTanContainer
     /**
      * @Callback(table="tl_survey_pin_tan", target="list.global_operations.invite.button")
      */
-    public function inviteButton(
-        ?string $href,
-        string $label,
-        string $title,
-        string $class,
-        string $attributes,
-        string $table,
-        ?array $rootIds
-    ): string
+    public function inviteButton(?string $href, string $label, string $title, string $class, string $attributes, string $table, ?array $rootIds): string
     {
         if ($GLOBALS['TL_SVY']['nc_is_installed']) {
             /** @noinspection HtmlUnknownTarget */
-            $html = sprintf('<a class="%s" href="%s" title="%s"%s>%s</a>',$class,Backend::addToUrl($href),StringUtil::specialchars($title),$attributes,$label);
+            $html = sprintf('<a class="%s" href="%s" title="%s"%s>%s</a>', $class, Backend::addToUrl($href), StringUtil::specialchars($title), $attributes, $label);
         } else {
             /** @noinspection HtmlUnknownTarget */
-            $html = sprintf('<span class="%s" title="%s"%s>%s</span>',"{$class}_disabled",StringUtil::specialchars($title),$attributes,$label);
+            $html = sprintf('<span class="%s" title="%s"%s>%s</span>', "{$class}_disabled", StringUtil::specialchars($title), $attributes, $label);
         }
+
         return $html;
     }
 
     /**
      * @Callback(table="tl_survey_pin_tan", target="list.global_operations.remind.button")
      */
-    public function remindButton(
-        ?string $href,
-        string $label,
-        string $title,
-        string $class,
-        string $attributes,
-        string $table,
-        ?array $rootIds
-    ): string
+    public function remindButton(?string $href, string $label, string $title, string $class, string $attributes, string $table, ?array $rootIds): string
     {
         if ($GLOBALS['TL_SVY']['nc_is_installed']) {
             /** @noinspection HtmlUnknownTarget */
-            $html = sprintf('<a class="%s" href="%s" title="%s"%s>%s</a>',$class,Backend::addToUrl($href),StringUtil::specialchars($title),$attributes,$label);
+            $html = sprintf('<a class="%s" href="%s" title="%s"%s>%s</a>', $class, Backend::addToUrl($href), StringUtil::specialchars($title), $attributes, $label);
         } else {
             /** @noinspection HtmlUnknownTarget */
-            $html = sprintf('<span class="%s" title="%s"%s>%s</span>',"{$class}_disabled",StringUtil::specialchars($title),$attributes,$label);
+            $html = sprintf('<span class="%s" title="%s"%s>%s</span>', "{$class}_disabled", StringUtil::specialchars($title), $attributes, $label);
         }
+
         return $html;
     }
-
 
     /**
      * @Callback(table="tl_survey_pin_tan", target="list.label.label")
@@ -135,7 +120,7 @@ class SurveyPinTanContainer
     {
         $L = $GLOBALS['TL_LANG']['tl_survey_pin_tan'];
         // used icon
-        $key = 0 === (int)$row['used'] ? 'tan_new' : 'tan_used';
+        $key = 0 === (int) $row['used'] ? 'tan_new' : 'tan_used';
         $alt = $L[$key];
         $attributes = "title='{$L[$key]}'";
         $usedIcon = Image::getHtml("bundles/hschottmsurvey/images/$key.svg", $alt, $attributes);

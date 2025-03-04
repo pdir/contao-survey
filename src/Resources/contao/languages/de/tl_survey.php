@@ -54,7 +54,7 @@ $GLOBALS['TL_LANG']['tl_survey']['limit_groups'] = ['Limitieren auf Mitgliedergr
 $GLOBALS['TL_LANG']['tl_survey']['allowed_groups'] = ['Mitgliedergruppen', 'Wählen Sie die Mitgliedergruppen aus, welche die Umfrage durchführen dürfen.'];
 
 $GLOBALS['TL_LANG']['tl_survey']['useNotifications'] = ['Notification Center verwenden', 'Wenn Sie die Funktionen des Notification Centers verwenden möchten, so müssen Sie zuerst geeignete Benachrichtigungen definieren.'];
-$GLOBALS['TL_LANG']['tl_survey']['useNotificationsNotInstalled'] = ["Notification Center verwenden (nicht installiert)", "<span style='color:red;'>Sie können diese Funktion nicht verwenden, da das Notification Center aktuell nicht installiert ist. Bitte wenden Sie sich an Ihren Administrator, um diese Funktion zu aktivieren.</span>"];
+$GLOBALS['TL_LANG']['tl_survey']['useNotificationsNotInstalled'] = ['Notification Center verwenden (nicht installiert)', "<span style='color:red;'>Sie können diese Funktion nicht verwenden, da das Notification Center aktuell nicht installiert ist. Bitte wenden Sie sich an Ihren Administrator, um diese Funktion zu aktivieren.</span>"];
 
 $GLOBALS['TL_LANG']['tl_survey']['invitationNotificationId'] = ['Diese Nachricht als Einladung verwenden.', 'Wählen Sie hier die Nachricht für die Einladung aus.'];
 $GLOBALS['TL_LANG']['tl_survey']['reminderNotificationId'] = ['Diese Nachricht als Erinnerung verwenden.', 'Wählen Sie hier die Nachricht für die Erinnerung aus.'];
@@ -100,7 +100,7 @@ $GLOBALS['TL_LANG']['tl_survey']['formattedMailTemplate'] = ['HTML-Vorlage für 
 $GLOBALS['TL_LANG']['tl_survey']['misc_legend'] = 'Allgemeine Einstellungen';
 $GLOBALS['TL_LANG']['tl_survey']['allowback'] = ['Zurückgehen erlauben', 'Bitte wählen Sie, ob Teilnehmer auf eine vorherige Seite der Umfrage zurückgehen dürfen.'];
 $GLOBALS['TL_LANG']['tl_survey']['immediate_start'] = ['Umfrage sofort starten', 'Bitte wählen Sie, ob das Formular der Umfrage sofort angezeigt werden soll.'];
-$GLOBALS['TL_LANG']['tl_survey']['allow_autostart'] = ['Umfrage automatisch starten','Wenn Sie diese Funktion aktivieren, dann wird beim Aufruf der Umfrageseite durch einen Link mit TAN die Umfrage automatisch gestartet. Die TAN muss also nicht extra eingegeben und bestätigt werden. Für diese Funktion muss jQuery aktiviert sein!'];
+$GLOBALS['TL_LANG']['tl_survey']['allow_autostart'] = ['Umfrage automatisch starten', 'Wenn Sie diese Funktion aktivieren, dann wird beim Aufruf der Umfrageseite durch einen Link mit TAN die Umfrage automatisch gestartet. Die TAN muss also nicht extra eingegeben und bestätigt werden. Für diese Funktion muss jQuery aktiviert sein!'];
 $GLOBALS['TL_LANG']['tl_survey']['jumpto'] = ['Weiterleitung zu Seite', 'Mit dieser Einstellung legen Sie fest, auf welche Seite ein Benutzer nach dem Beenden der Umfrage weitergeleitet wird.'];
 $GLOBALS['TL_LANG']['tl_survey']['useResultCategories'] = ['Antwort-Kategorien verwenden', 'Aktivieren Sie diese Option, um Kategorien für Antworten (nur bei Multiplie Choice) zu verwenden.'];
 $GLOBALS['TL_LANG']['tl_survey']['resultCategories'] = ['Antwort-Kategorien', 'Hier können Sie Antwort-Kategorien anlegen.'];

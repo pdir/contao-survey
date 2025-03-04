@@ -14,7 +14,7 @@ declare(strict_types=1);
  * @link       https://github.com/pdir/contao-survey
  */
 
-$GLOBALS['TL_LANG']['CTE']['survey'] = [ 'Umfrage', 'Verwenden Sie diese Option, um eine Umfrage in den Artikel einzubinden.'];
+$GLOBALS['TL_LANG']['CTE']['survey'] = ['Umfrage', 'Verwenden Sie diese Option, um eine Umfrage in den Artikel einzubinden.'];
 $GLOBALS['TL_LANG']['MSC']['deleteAll'] = 'Alle Teilnehmerdaten löschen';
 $GLOBALS['TL_LANG']['MSC']['page_x_of_y'] = 'Seite %s von %s';
 $GLOBALS['TL_LANG']['MSC']['survey_next'] = 'Weiter';

@@ -27,7 +27,7 @@ $GLOBALS['TL_LANG']['tl_survey_question']['introduction'] = ['Introduction', 'Pl
 $GLOBALS['TL_LANG']['tl_survey_question']['lower_bound'] = ['Lower bound', 'Please enter the lower bound of the range.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['upper_bound'] = ['Upper bound', 'Please enter the upper bound of the range.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['choices'] = ['Choices', 'Please use the buttons to create, copy, move, or delete choices. If you disabled JavaScript, please save your input before you change the struture of the choices!'];
-$GLOBALS['TL_LANG']['tl_survey_question']['choices_'] = ['choice' => ['Choice'],'category' => ['Category']];
+$GLOBALS['TL_LANG']['tl_survey_question']['choices_'] = ['choice' => ['Choice'], 'category' => ['Category']];
 $GLOBALS['TL_LANG']['tl_survey_question']['hidetitle'] = ['Hide question title', 'Do not show the question title during survey execution.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['addother'] = ['Add other', 'Add an additional choice (other) with a text field.'];
 $GLOBALS['TL_LANG']['tl_survey_question']['addscale'] = ['Add scale', 'Choose a scale from the list of scales and add the scale to the question.'];

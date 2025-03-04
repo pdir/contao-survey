@@ -75,7 +75,6 @@ class SurveyContainer
         }
     }
 
-
     /**
      * @Callback(table="tl_survey", target="list.operations.pintan.button")
      */
